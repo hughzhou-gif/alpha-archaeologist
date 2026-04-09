@@ -3262,6 +3262,92 @@
         "date": "Mar 11",
         "price": 1.9733
       }
+    ],
+    "backtestEvents": [
+      {
+        "token": "OKB",
+        "date": "Aug 2025",
+        "change": "+447%",
+        "matched": 1,
+        "type": "hit"
+      },
+      {
+        "token": "LPT",
+        "date": "May 2025",
+        "change": "+144%",
+        "matched": 1,
+        "type": "hit"
+      },
+      {
+        "token": "wM",
+        "date": "Sep 2025",
+        "change": "+143%",
+        "matched": 2,
+        "type": "hit"
+      },
+      {
+        "token": "OL",
+        "date": "Oct 2025",
+        "change": "+115%",
+        "matched": 1,
+        "type": "hit"
+      },
+      {
+        "token": "CYBER",
+        "date": "Aug 2025",
+        "change": "+107%",
+        "matched": 1,
+        "type": "hit"
+      },
+      {
+        "token": "LIT",
+        "date": "Jan 2026",
+        "change": "+2%",
+        "matched": 1,
+        "type": "falsePositive"
+      },
+      {
+        "token": "WLFI",
+        "date": "Sep 2025",
+        "change": "+0%",
+        "matched": 2,
+        "type": "falsePositive"
+      },
+      {
+        "token": "wM",
+        "date": "Nov 2025",
+        "change": "+4%",
+        "matched": 2,
+        "type": "falsePositive"
+      },
+      {
+        "token": "SYRUP",
+        "date": "Jul 2025",
+        "change": "+28%",
+        "matched": 2,
+        "type": "falsePositive"
+      },
+      {
+        "token": "AAVE",
+        "date": "Jul 2025",
+        "change": "+2%",
+        "matched": 1,
+        "type": "miss"
+      },
+      {
+        "token": "SAHARA",
+        "date": "Jun 2025",
+        "change": "+21%",
+        "matched": 1,
+        "type": "miss"
+      },
+      {
+        "token": "SKY",
+        "date": "May 2025",
+        "change": "+4%",
+        "matched": 1,
+        "type": "miss"
+      }
     ]
   },
   "VIRTUAL": {
@@ -7232,6 +7318,71 @@
         "date": "Oct 27",
         "price": 1.0
       }
+    ],
+    "backtestEvents": [
+      {
+        "token": "wM",
+        "date": "Sep 2025",
+        "change": "+742%",
+        "matched": 1,
+        "type": "hit"
+      },
+      {
+        "token": "SPK",
+        "date": "Jul 2025",
+        "change": "+100%",
+        "matched": 1,
+        "type": "hit"
+      },
+      {
+        "token": "ADS",
+        "date": "Sep 2025",
+        "change": "+97%",
+        "matched": 1,
+        "type": "hit"
+      },
+      {
+        "token": "ADS",
+        "date": "Sep 2025",
+        "change": "+97%",
+        "matched": 1,
+        "type": "hit"
+      },
+      {
+        "token": "SUPER",
+        "date": "Sep 2025",
+        "change": "+73%",
+        "matched": 1,
+        "type": "hit"
+      },
+      {
+        "token": "ZAMA",
+        "date": "Feb 2026",
+        "change": "+0%",
+        "matched": 1,
+        "type": "falsePositive"
+      },
+      {
+        "token": "PAXG",
+        "date": "Mar 2026",
+        "change": "+3%",
+        "matched": 1,
+        "type": "miss"
+      },
+      {
+        "token": "AAVE",
+        "date": "Mar 2026",
+        "change": "+1%",
+        "matched": 1,
+        "type": "miss"
+      },
+      {
+        "token": "REKT",
+        "date": "Dec 2025",
+        "change": "+9%",
+        "matched": 1,
+        "type": "miss"
+      }
     ]
   },
   "EDGE": {
@@ -10200,6 +10351,71 @@
       {
         "date": "Apr 09",
         "price": 0.1404
+      }
+    ],
+    "backtestEvents": [
+      {
+        "token": "wM",
+        "date": "Sep 2025",
+        "change": "+742%",
+        "matched": 1,
+        "type": "hit"
+      },
+      {
+        "token": "SPK",
+        "date": "Jul 2025",
+        "change": "+100%",
+        "matched": 1,
+        "type": "hit"
+      },
+      {
+        "token": "ADS",
+        "date": "Sep 2025",
+        "change": "+97%",
+        "matched": 1,
+        "type": "hit"
+      },
+      {
+        "token": "ADS",
+        "date": "Sep 2025",
+        "change": "+97%",
+        "matched": 1,
+        "type": "hit"
+      },
+      {
+        "token": "SUPER",
+        "date": "Sep 2025",
+        "change": "+73%",
+        "matched": 1,
+        "type": "hit"
+      },
+      {
+        "token": "ZAMA",
+        "date": "Feb 2026",
+        "change": "+0%",
+        "matched": 1,
+        "type": "falsePositive"
+      },
+      {
+        "token": "PAXG",
+        "date": "Mar 2026",
+        "change": "+3%",
+        "matched": 1,
+        "type": "miss"
+      },
+      {
+        "token": "AAVE",
+        "date": "Mar 2026",
+        "change": "+1%",
+        "matched": 1,
+        "type": "miss"
+      },
+      {
+        "token": "REKT",
+        "date": "Dec 2025",
+        "change": "+9%",
+        "matched": 1,
+        "type": "miss"
       }
     ]
   }

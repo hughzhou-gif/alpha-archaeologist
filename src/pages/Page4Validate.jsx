@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef, useMemo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { validationLogs as mockValidationLogs, validationMetrics as mockValidationMetrics } from '../data/mockData'
+import cachedRuns from '../data/cachedRuns.json'
 import AgentIcon from '../components/AgentIcon'
 import { Check, X, Loader2, CheckCircle } from 'lucide-react'
 
@@ -547,12 +548,18 @@ export default function Page4Validate({ onNext, research }) {
   const [showResults, setShowResults] = useState(false)
   const [showVerdict, setShowVerdict] = useState(false)
 
-  // If live data arrived, skip animation and show results directly
+  // If live data arrived, use real backtest events and show results directly
   useEffect(() => {
     if (liveValidate) {
       setLogIndex(validationLogs.length - 1)
-      const allEvents = validationLogs.filter(l => l.event).map(l => l.event)
-      setScatterEvents(allEvents)
+      // Use real backtest events from cache if available
+      const tokenName = research?.eventData?.token || ''
+      const realEvents = cachedRuns[tokenName]?.backtestEvents
+      if (realEvents?.length) {
+        setScatterEvents(realEvents)
+      } else {
+        setScatterEvents(validationLogs.filter(l => l.event).map(l => l.event))
+      }
       setShowResults(true)
       setShowVerdict(true)
     }
