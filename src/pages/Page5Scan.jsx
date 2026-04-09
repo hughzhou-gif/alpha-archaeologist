@@ -208,21 +208,30 @@ export default function Page5Scan({ onNext, research }) {
   const [visibleTokens, setVisibleTokens] = useState([])
   const [done, setDone] = useState(false)
 
-  // If live data arrived, show results with log replay
+  // If live data arrived, replay logs and stagger token reveals
   useEffect(() => {
     if (liveScan && isLive) {
-      setVisibleTokens(liveTokens)
-      // Replay scan logs with delay
-      let idx = 0
+      let logIdx = 0
+      let tokenIdx = 0
+      // Calculate how often to reveal a token (spread across log replay)
+      const logsPerToken = Math.max(1, Math.floor(liveScanLogs.length / (liveTokens.length || 1)))
+
       const interval = setInterval(() => {
-        if (idx < liveScanLogs.length) {
-          setLogIndex(idx)
-          idx++
+        if (logIdx < liveScanLogs.length) {
+          setLogIndex(logIdx)
+          // Reveal next token at regular intervals
+          if (logIdx > 0 && logIdx % logsPerToken === 0 && tokenIdx < liveTokens.length) {
+            setVisibleTokens(prev => [...prev, liveTokens[tokenIdx]])
+            tokenIdx++
+          }
+          logIdx++
         } else {
+          // Show any remaining tokens
+          setVisibleTokens(liveTokens)
           clearInterval(interval)
           setDone(true)
         }
-      }, 60)
+      }, 120)
       return () => clearInterval(interval)
     } else if (liveScan) {
       setLogIndex(activeLogs.length - 1)

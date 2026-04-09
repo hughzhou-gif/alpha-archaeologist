@@ -30,18 +30,8 @@ export default function App() {
   const [direction, setDirection] = useState(1)
   const research = useAlphaResearch()
 
-  // Auto-advance pages when pipeline phases complete
-  // Skip Dig (page 1) — user stays there watching logs and clicks "Extract Pattern" manually
-  // Skip Extract (page 2) — user clicks "Validate Pattern" manually
-  // Auto-advance from Validate onward since those are fast
-  useEffect(() => {
-    const phaseToPage = { scan: 4, act: 5 }
-    const target = phaseToPage[research.currentPhase]
-    if (target && target > currentPage) {
-      setDirection(1)
-      setCurrentPage(target)
-    }
-  }, [research.currentPhase])
+  // No auto-advance — user navigates manually through each page
+  // This lets them watch each phase's animation/data before moving on
 
   const goNext = useCallback(() => {
     if (currentPage < pages.length - 1) {

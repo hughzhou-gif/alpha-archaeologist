@@ -126,7 +126,7 @@ function ActionCard({ data, index, isExpanded, onToggle }) {
                   { label: 'Win Rate', value: `${data.winRate}%` },
                   { label: 'Avg Move', value: data.avgMove },
                   { label: 'Avg Lead', value: data.avgLead },
-                ].map(s => (
+                ].filter(s => s.value).map(s => (
                   <div key={s.label}>
                     <div style={{ fontSize: '11px', color: 'var(--text-tertiary)', fontFamily: 'var(--font-body)', letterSpacing: '0.5px' }}>{s.label}</div>
                     <div style={{ fontSize: '16px', fontWeight: 700, color: 'var(--text-primary)', fontFamily: 'var(--font-mono)', marginTop: 2 }}>{s.value}</div>
@@ -235,8 +235,8 @@ export default function Page5Act({ research }) {
         })),
       ],
       winRate: Math.round((c.historical_win_rate ?? 0.625) * 1000) / 10,
-      avgMove: '+' + Math.round((c.historical_win_rate ?? 0.6) * 200) + '%',
-      avgLead: '4.2 days',
+      avgMove: c.avg_move_pct ? `+${Math.round(c.avg_move_pct)}%` : null,
+      avgLead: c.avg_lead_time_days ? `${c.avg_lead_time_days.toFixed(1)} days` : null,
       sourceCases: c.source_cases || [],
       alertDate: null,
       moveDate: null,
