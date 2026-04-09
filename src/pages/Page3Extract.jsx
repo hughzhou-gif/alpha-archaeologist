@@ -229,8 +229,18 @@ export default function Page3Extract({ onNext, research }) {
         ))}
       </motion.div>
 
-      {/* Reasoning panel */}
-      <ReasoningPanel reasoning={patternData.reasoning} />
+      {/* Reasoning panel — appears after all phases revealed */}
+      <AnimatePresence>
+        {showButton && (
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+          >
+            <ReasoningPanel reasoning={patternData.reasoning} />
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* CTA button */}
       <AnimatePresence>
