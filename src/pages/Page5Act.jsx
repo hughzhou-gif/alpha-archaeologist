@@ -212,10 +212,13 @@ export default function Page5Act({ research }) {
         ? c.waiting_for.replace(/^Waiting for:\s*/i, '').split(',').map(s => s.trim()).filter(Boolean)
         : []
 
-    // Derive confirmed signals: all pattern conditions minus waiting ones
+    // Derive confirmed signals from pattern conditions
+    // Use match_ratio numerator as the confirmed count, not total - waiting
     const allConditions = research?.extractData?.conditions || []
+    const waitingSet = new Set(waitingFor)
     const confirmedSignals = allConditions
-      .filter(cond => !waitingFor.includes(cond.signal_type))
+      .filter(cond => !waitingSet.has(cond.signal_type))
+      .slice(0, confirmed)  // only take as many as match_ratio says
       .map(cond => ({
         name: cond.signal_type.replace(/_/g, ' '),
         status: 'confirmed',
