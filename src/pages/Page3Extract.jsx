@@ -10,12 +10,39 @@ const SOURCE_COLORS = {
   market: 'var(--signal-market)',
 }
 
-const PHASE_CONFIG = [
+const CATEGORY_ICONS = {
+  onchain: { icon: Anchor, sourceType: 'onchain' },
+  social: { icon: MessageCircle, sourceType: 'social' },
+  governance: { icon: Landmark, sourceType: 'governance' },
+  market: { icon: BarChart2, sourceType: 'market' },
+  market_structure: { icon: BarChart2, sourceType: 'market' },
+  news: { icon: MessageCircle, sourceType: 'social' },
+  development: { icon: Landmark, sourceType: 'governance' },
+}
+
+const DEFAULT_PHASE_CONFIG = [
   { icon: Anchor, label: 'Whale Accumulation', phase: 'PHASE 1', sourceType: 'onchain' },
   { icon: Landmark, label: 'Governance Proposal', phase: 'PHASE 2', sourceType: 'governance' },
   { icon: MessageCircle, label: 'KOL Mention', phase: 'PHASE 3', sourceType: 'social' },
   { icon: BarChart2, label: 'Volume Spike', phase: 'TIMING', sourceType: 'market' },
 ]
+
+function getPhaseConfig(signals) {
+  // If mock data (4 signals matching default), use defaults
+  if (signals.length === 4 && signals[0]?.sourceType === 'onchain') {
+    return DEFAULT_PHASE_CONFIG
+  }
+  // Dynamic config from live/cache conditions
+  return signals.map((sig, i) => {
+    const cat = CATEGORY_ICONS[sig.sourceType] || CATEGORY_ICONS.onchain
+    return {
+      icon: cat.icon,
+      label: sig.description || sig.id,
+      phase: `PHASE ${i + 1}`,
+      sourceType: cat.sourceType,
+    }
+  })
+}
 
 function PhaseNode({ config, signal, index, isVisible }) {
   const IconComp = config.icon
@@ -180,15 +207,18 @@ export default function Page3Extract({ onNext, research }) {
       </motion.div>
 
       {/* Phase flow — open layout, no card wrapper */}
-      <div className="flex items-start justify-center" style={{ marginTop: 48, gap: 8 }}>
-        {patternData.signals.map((sig, i) => (
+      <div className="flex items-start justify-center flex-wrap" style={{ marginTop: 48, gap: 8 }}>
+        {patternData.signals.map((sig, i) => {
+          const phaseConfig = getPhaseConfig(patternData.signals)
+          return (
           <div key={sig.id} className="flex items-start" style={{ display: 'contents' }}>
-            <PhaseNode config={PHASE_CONFIG[i]} signal={sig} index={i} isVisible={i < visibleNodes} />
+            <PhaseNode config={phaseConfig[i]} signal={sig} index={i} isVisible={i < visibleNodes} />
             {i < patternData.signals.length - 1 && (
               <DottedLine isVisible={i < visibleNodes - 1} delay={i * 0.2 + 0.25} />
             )}
           </div>
-        ))}
+          )
+        })}
       </div>
 
       {/* Metrics row */}
