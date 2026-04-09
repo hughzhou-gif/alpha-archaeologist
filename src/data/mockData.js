@@ -1,8 +1,8 @@
 // === Example Events (Page 1) ===
 export const exampleEvents = [
-  { title: 'PENDLE Pump', date: 'Mar 2025', magnitude: '+283%', query: 'PENDLE pumped 283% in March 2025' },
-  { title: 'AI16Z Rally', date: 'Jan 2025', magnitude: '+500%', query: 'AI16Z rallied 500% in January 2025' },
-  { title: 'ENA Surge', date: 'Feb 2025', magnitude: '+45%', query: 'ENA surged 45% in February 2025' },
+  { title: 'VIRTUAL Pump', date: 'Oct 2024', magnitude: '+830%', query: 'VIRTUAL pumped 830% in October 2024' },
+  { title: 'EDGE Rally', date: 'Feb 2026', magnitude: '+217%', query: 'EDGE rallied 217% in February 2026' },
+  { title: 'MORPHO Surge', date: 'Feb 2026', magnitude: '+81%', query: 'MORPHO surged 81% in February 2026' },
 ]
 
 // === Research Logs (Page 2) ===
