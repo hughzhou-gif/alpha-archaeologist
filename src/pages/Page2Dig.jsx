@@ -265,29 +265,38 @@ export default function Page2Dig({ onNext }) {
         </div>
       </div>
 
-      {/* Bottom progress */}
-      <ProgressBar current={agentsDone} total={6} currentAgent={logIndex >= 0 ? researchLogs[logIndex]?.agent : 'Starting'} done={done} />
-
-      {/* Next button */}
+      {/* Next button — replaces progress bar when done */}
       <AnimatePresence>
-        {done && (
+        {done ? (
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="fixed bottom-20 right-8"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="h-12 flex items-center justify-end px-6"
+            style={{ borderTop: '0.5px solid rgba(255,255,255,0.08)' }}
           >
             <button
               onClick={onNext}
-              className="px-5 py-2.5 rounded-[12px] text-sm font-semibold text-white cursor-pointer transition-all duration-200 hover:opacity-80"
+              className="px-6 py-2 rounded-full text-sm font-semibold text-white cursor-pointer transition-all duration-200"
               style={{
                 fontFamily: 'var(--font-mono)',
                 background: 'var(--signal-onchain)',
                 boxShadow: '0 0 16px rgba(74, 144, 217, 0.3)',
               }}
+              onMouseEnter={e => { e.currentTarget.style.boxShadow = '0 0 28px rgba(74, 144, 217, 0.5)'; e.currentTarget.style.transform = 'scale(1.04)' }}
+              onMouseLeave={e => { e.currentTarget.style.boxShadow = '0 0 16px rgba(74, 144, 217, 0.3)'; e.currentTarget.style.transform = 'scale(1)' }}
             >
               Extract Pattern →
             </button>
           </motion.div>
+        ) : (
+          <div className="h-12 flex items-center justify-between px-6" style={{ borderTop: '0.5px solid rgba(255,255,255,0.08)' }}>
+            <div style={{ color: 'var(--text-tertiary)', fontSize: '12px', fontFamily: 'var(--font-mono)' }}>
+              {logIndex >= 0 ? researchLogs[logIndex]?.agent : 'Starting'}... {Math.min(agentsDone, 5)}/5 agents
+            </div>
+            <div className="w-[160px] h-1.5 rounded-full overflow-hidden" style={{ background: 'rgba(255,255,255,0.06)' }}>
+              <div className="h-full rounded-full transition-all duration-500" style={{ width: `${Math.min((agentsDone / 5) * 100, 100)}%`, background: 'var(--signal-onchain)' }} />
+            </div>
+          </div>
         )}
       </AnimatePresence>
     </div>
