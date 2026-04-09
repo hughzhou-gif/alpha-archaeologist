@@ -152,7 +152,7 @@ export default function Page2Dig({ onNext, research }) {
     .map((l, i) => l.isHighlight ? i : -1)
     .filter(i => i >= 0)
 
-  // Live mode: replay dig-phase logs with natural timing
+  // Live mode: replay dig-phase logs — batch normal logs, pause on highlights
   useEffect(() => {
     if (!isLive) return
     if (digPhaseLogs.length === 0) return
@@ -163,21 +163,32 @@ export default function Page2Dig({ onNext, research }) {
 
     function tick() {
       if (cancelled) return
-      if (idx < digPhaseLogs.length) {
+      if (idx >= digPhaseLogs.length) {
+        setVisibleSignals(liveSignals)
+        setDone(true)
+        return
+      }
+
+      // Check if next log is a highlight
+      const isHL = highlightIndices.includes(idx)
+
+      if (isHL) {
+        // Show this highlight log, reveal signal, pause
         setLogIndex(idx)
-        if (highlightIndices.includes(idx) && sigIdx < liveSignals.length) {
+        if (sigIdx < liveSignals.length) {
           const nextBatch = liveSignals.slice(sigIdx, sigIdx + sigsPerHighlight)
           setVisibleSignals(prev => [...prev, ...nextBatch])
           sigIdx += sigsPerHighlight
         }
         idx++
-        // Variable delay: highlights pause longer, normal logs are faster
-        const isHL = highlightIndices.includes(idx - 1)
-        const delay = isHL ? 600 + Math.random() * 400 : 150 + Math.random() * 250
-        setTimeout(tick, delay)
+        setTimeout(tick, 800 + Math.random() * 400)
       } else {
-        setVisibleSignals(liveSignals)
-        setDone(true)
+        // Batch forward: skip to next highlight (or end), show all at once
+        const nextHL = highlightIndices.find(h => h > idx) ?? digPhaseLogs.length
+        const batchEnd = Math.min(nextHL, idx + 8) // max 8 logs per batch
+        setLogIndex(batchEnd - 1)
+        idx = batchEnd
+        setTimeout(tick, 200 + Math.random() * 150)
       }
     }
     tick()
