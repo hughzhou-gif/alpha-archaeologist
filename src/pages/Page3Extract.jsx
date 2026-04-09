@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ChevronDown, Anchor, Landmark, MessageCircle, BarChart2, Clock, Target, ClipboardList } from 'lucide-react'
-import { patternData } from '../data/mockData'
+import { patternData as mockPatternData } from '../data/mockData'
 
 const SOURCE_COLORS = {
   onchain: 'var(--signal-onchain)',
@@ -116,7 +116,27 @@ function ReasoningPanel({ reasoning }) {
   )
 }
 
-export default function Page3Extract({ onNext }) {
+export default function Page3Extract({ onNext, research }) {
+  const liveExtract = research?.extractData
+  // Convert live extract data to patternData shape
+  const patternData = liveExtract ? {
+    id: liveExtract.pattern_id || '#P-LIVE',
+    name: liveExtract.name || 'Extracted Pattern',
+    signals: (liveExtract.conditions || []).map((c, i) => ({
+      id: String.fromCharCode(65 + i),
+      timeWindow: c.day_range ? `Day ${c.day_range[0]} to ${c.day_range[1]}` : '',
+      sourceType: c.category || 'onchain',
+      description: c.description || c.signal_type,
+      required: c.required,
+    })),
+    metadata: {
+      window: `${liveExtract.time_window_days || 7} days`,
+      minSignals: `${liveExtract.min_signals_required || 3} of ${(liveExtract.conditions || []).length}`,
+      sourceEvent: 'Live analysis',
+    },
+    reasoning: liveExtract.reasoning || 'Pattern extracted from live pipeline analysis.',
+  } : mockPatternData
+
   const [entered, setEntered] = useState(false)
   const [visibleNodes, setVisibleNodes] = useState(0)
   const [showButton, setShowButton] = useState(false)
@@ -136,7 +156,7 @@ export default function Page3Extract({ onNext }) {
       }
     }, 400)
     return () => clearTimeout(t)
-  }, [entered, visibleNodes])
+  }, [entered, visibleNodes, patternData.signals.length])
 
   return (
     <div className="h-full flex flex-col items-center overflow-y-auto" style={{ padding: '48px 0' }}>

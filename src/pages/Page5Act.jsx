@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { AreaChart, Area, XAxis, YAxis, ResponsiveContainer, ReferenceLine, ReferenceArea, Tooltip } from 'recharts'
-import { actionCards, proofPriceData } from '../data/mockData'
+import { actionCards as mockActionCards, proofPriceData } from '../data/mockData'
 import { Target, CircleCheck, Clock, ChevronDown, AlertTriangle } from 'lucide-react'
 
 function MatchProgressBar({ confirmed, total }) {
@@ -194,7 +194,32 @@ function ActionCard({ data, index, isExpanded, onToggle }) {
   return cardContent
 }
 
-export default function Page5Act() {
+export default function Page5Act({ research }) {
+  const liveAct = research?.actData
+
+  // Convert live act cards to the component's expected shape
+  const actionCards = liveAct?.cards?.length ? liveAct.cards.map(c => ({
+    token: c.token,
+    matchProgress: {
+      confirmed: c.matched_conditions?.length ?? Math.round(c.match_ratio * 4),
+      total: 4,
+    },
+    signals: (c.waiting_for || []).map(w => ({
+      name: w, status: 'waiting', detail: 'waiting...',
+    })).concat(
+      (c.source_cases || []).slice(0, 3).map(s => ({
+        name: s, status: 'confirmed', detail: s,
+      }))
+    ),
+    winRate: (c.historical_win_rate ?? 0.625) * 100,
+    avgMove: '+' + Math.round((c.historical_win_rate ?? 0.6) * 200) + '%',
+    avgLead: '4.2 days',
+    sourceCases: c.source_cases || [],
+    alertDate: null,
+    moveDate: null,
+    proofText: null,
+  })) : mockActionCards
+
   const [expandedIndex, setExpandedIndex] = useState(null)
   const [visibleCards, setVisibleCards] = useState(0)
 

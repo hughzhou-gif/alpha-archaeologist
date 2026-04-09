@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useMemo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { validationLogs, validationMetrics } from '../data/mockData'
+import { validationLogs as mockValidationLogs, validationMetrics as mockValidationMetrics } from '../data/mockData'
 import AgentIcon from '../components/AgentIcon'
 import { Check, X, Loader2, CheckCircle } from 'lucide-react'
 
@@ -376,14 +376,38 @@ function VerdictBanner({ passed, onNext }) {
 }
 
 /* ---------- Page ---------- */
-export default function Page4Validate({ onNext }) {
+export default function Page4Validate({ onNext, research }) {
+  const liveValidate = research?.validateData
+
+  // Build metrics from live data or fall back to mock
+  const validationMetrics = liveValidate ? [
+    { label: 'Hit Rate', value: (liveValidate.hit_rate ?? 0) * 100, unit: '%', threshold: '>50%', passed: (liveValidate.hit_rate ?? 0) >= 0.5 },
+    { label: 'False Positive Rate', value: (liveValidate.false_positive_rate ?? 0) * 100, unit: '%', threshold: '<40%', passed: (liveValidate.false_positive_rate ?? 0) < 0.4 },
+    { label: 'Lift', value: liveValidate.lift ?? 0, unit: 'x', threshold: '>2x', passed: (liveValidate.lift ?? 0) > 2 },
+    { label: 'Sample Size', value: liveValidate.total_pump_events ?? 0, unit: '', threshold: '≥5', passed: (liveValidate.total_pump_events ?? 0) >= 5 },
+  ] : mockValidationMetrics
+
+  const validationLogs = mockValidationLogs
+
   const [logIndex, setLogIndex] = useState(-1)
   const [scatterEvents, setScatterEvents] = useState([])
   const [showResults, setShowResults] = useState(false)
   const [showVerdict, setShowVerdict] = useState(false)
 
-  // Log playback
+  // If live data arrived, skip animation and show results directly
   useEffect(() => {
+    if (liveValidate) {
+      setLogIndex(validationLogs.length - 1)
+      const allEvents = validationLogs.filter(l => l.event).map(l => l.event)
+      setScatterEvents(allEvents)
+      setShowResults(true)
+      setShowVerdict(true)
+    }
+  }, [liveValidate])
+
+  // Log playback (mock mode)
+  useEffect(() => {
+    if (liveValidate) return
     if (logIndex >= validationLogs.length - 1) return
     const delay = 400 + Math.random() * 400
     const timer = setTimeout(() => {
@@ -401,7 +425,7 @@ export default function Page4Validate({ onNext }) {
       }
     }, delay)
     return () => clearTimeout(timer)
-  }, [logIndex])
+  }, [logIndex, liveValidate])
 
   const handleSkip = () => {
     setLogIndex(validationLogs.length - 1)
@@ -411,14 +435,13 @@ export default function Page4Validate({ onNext }) {
     setShowVerdict(true)
   }
 
-  // Listen for global skip event from App.jsx tab bar
   useEffect(() => {
     const handler = () => handleSkip()
     window.addEventListener('skip-animation', handler)
     return () => window.removeEventListener('skip-animation', handler)
   }, [])
 
-  useEffect(() => { setLogIndex(0) }, [])
+  useEffect(() => { if (!liveValidate) setLogIndex(0) }, [liveValidate])
 
   return (
     <div className="h-full flex flex-col pt-12 px-6">
@@ -454,7 +477,7 @@ export default function Page4Validate({ onNext }) {
                 <MetricCard key={m.label} {...m} delay={i * 0.2} />
               ))}
             </div>
-            {showVerdict && <VerdictBanner passed={true} onNext={onNext} />}
+            {showVerdict && <VerdictBanner passed={liveValidate ? !!liveValidate.passed : true} onNext={onNext} />}
           </motion.div>
         )}
       </AnimatePresence>

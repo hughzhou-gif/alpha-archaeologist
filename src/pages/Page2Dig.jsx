@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { AreaChart, Area, XAxis, YAxis, ResponsiveContainer, Tooltip, ReferenceDot } from 'recharts'
-import { researchLogs, signals, priceData, signalTriggerMap } from '../data/mockData'
+import { researchLogs as mockLogs, signals as mockSignals, priceData as mockPriceData, signalTriggerMap } from '../data/mockData'
 
 import AgentIcon from '../components/AgentIcon'
 
@@ -72,7 +72,7 @@ function ProgressBar({ current, total, currentAgent, done }) {
       borderTop: '1px solid rgba(255,255,255,0.08)',
     }}>
       <div style={{ color: 'var(--text-secondary)', fontSize: '13px', fontFamily: 'var(--font-body)' }}>
-        {done ? `Research complete. ${signals.length} signals found across 5 sources.` : `${currentAgent}... ${current}/${total} agents complete`}
+        {done ? `Research complete. ${total} signals found across 5 sources.` : `${currentAgent}... ${current}/${total} agents complete`}
       </div>
       <div className="w-[200px] h-2 rounded-full overflow-hidden relative" style={{ background: 'var(--border-default)' }}>
         <div className="h-full rounded-full transition-all duration-500 relative overflow-hidden" style={{ width: `${pct}%`, background: 'var(--signal-onchain)' }}>
@@ -88,53 +88,72 @@ function ProgressBar({ current, total, currentAgent, done }) {
   )
 }
 
-export default function Page2Dig({ onNext }) {
+export default function Page2Dig({ onNext, research }) {
+  const isLive = research?.status === 'running' || research?.status === 'completed'
+  const liveLogs = research?.logs ?? []
+  const liveDigData = research?.digData
+  const liveEvent = research?.eventData
+
+  // Live mode: logs stream in from SSE, no timer needed
+  // Mock mode: use original timer-based playback
   const [logIndex, setLogIndex] = useState(-1)
   const [visibleSignals, setVisibleSignals] = useState([])
   const [done, setDone] = useState(false)
 
+  // Derive signals from live dig data
+  const liveSignals = liveDigData?.signals?.map(s => ({
+    date: s.timestamp?.slice(5, 10) || '',
+    type: s.category,
+    description: s.description,
+    relevance: s.relevance_score ?? 0.8,
+  })) ?? []
+
+  // In live mode, done when dig phase completes
+  const liveDone = !!liveDigData
+
+  // Mock playback (only when not live)
   useEffect(() => {
-    if (logIndex >= researchLogs.length - 1) return
+    if (isLive) return
+    if (logIndex >= mockLogs.length - 1) return
     const delay = 800 + Math.random() * 700
     const timer = setTimeout(() => {
       const next = logIndex + 1
       setLogIndex(next)
-
-      // Check if this log triggers a signal
       const trigger = signalTriggerMap.find(t => t.logIndex === next)
-      if (trigger) {
-        setVisibleSignals(prev => [...prev, signals[trigger.signalIndex]])
-      }
-
-      if (next >= researchLogs.length - 1) {
-        setDone(true)
-      }
+      if (trigger) setVisibleSignals(prev => [...prev, mockSignals[trigger.signalIndex]])
+      if (next >= mockLogs.length - 1) setDone(true)
     }, delay)
     return () => clearTimeout(timer)
-  }, [logIndex])
+  }, [logIndex, isLive])
 
   const handleSkip = () => {
-    setLogIndex(researchLogs.length - 1)
-    const allSignals = signalTriggerMap.map(t => signals[t.signalIndex])
-    setVisibleSignals(allSignals)
+    if (isLive) return
+    setLogIndex(mockLogs.length - 1)
+    setVisibleSignals(signalTriggerMap.map(t => mockSignals[t.signalIndex]))
     setDone(true)
   }
 
-  // Listen for global skip event from App.jsx tab bar
   useEffect(() => {
     const handler = () => handleSkip()
     window.addEventListener('skip-animation', handler)
     return () => window.removeEventListener('skip-animation', handler)
-  }, [])
+  }, [isLive])
 
-  // Start playback
-  useEffect(() => { setLogIndex(0) }, [])
+  useEffect(() => { if (!isLive) setLogIndex(0) }, [isLive])
 
-  const agentsDone = new Set(researchLogs.slice(0, logIndex + 1).filter(l => l.message.includes('complete') || l.message.includes('Research complete')).map(l => l.agent)).size
+  // Choose between live and mock data
+  const displayLogs = isLive ? liveLogs : mockLogs
+  const displayLogIndex = isLive ? liveLogs.length - 1 : logIndex
+  const displaySignals = isLive ? liveSignals : visibleSignals
+  const displayDone = isLive ? liveDone : done
 
-  const startPrice = priceData[0]?.price ?? 0
-  const endPrice = priceData[priceData.length - 1]?.price ?? 0
-  const pctChange = startPrice > 0 ? (((endPrice - startPrice) / startPrice) * 100).toFixed(0) : 0
+  const agentsDone = new Set(displayLogs.slice(0, displayLogIndex + 1).filter(l => l.message?.includes('complete') || l.message?.includes('Research complete')).map(l => l.agent)).size
+
+  const startPrice = mockPriceData[0]?.price ?? 0
+  const endPrice = mockPriceData[mockPriceData.length - 1]?.price ?? 0
+  const pctChange = isLive && liveEvent
+    ? (liveEvent.change_pct ?? 0).toFixed(0)
+    : startPrice > 0 ? (((endPrice - startPrice) / startPrice) * 100).toFixed(0) : 0
 
   return (
     <div className="h-full flex flex-col pt-12">
@@ -160,7 +179,7 @@ export default function Page2Dig({ onNext }) {
               background: 'var(--bg-2)',
               border: '0.5px solid rgba(255,255,255,0.08)',
             }}>
-              <ResearchLog logs={researchLogs} currentIndex={logIndex} />
+              <ResearchLog logs={displayLogs} currentIndex={displayLogIndex} />
             </div>
           </div>
         </div>
@@ -196,7 +215,7 @@ export default function Page2Dig({ onNext }) {
               border: '0.5px solid rgba(255,255,255,0.08)',
             }}>
               <ResponsiveContainer width="100%" height="100%">
-                <AreaChart data={priceData} margin={{ top: 8, right: 16, bottom: 0, left: 0 }}>
+                <AreaChart data={mockPriceData} margin={{ top: 8, right: 16, bottom: 0, left: 0 }}>
                   <defs>
                     <linearGradient id="priceGrad" x1="0" y1="0" x2="0" y2="1">
                       <stop offset="0%" stopColor="var(--accent-primary)" stopOpacity={0.3} />
@@ -207,8 +226,8 @@ export default function Page2Dig({ onNext }) {
                   <YAxis tick={{ fill: 'var(--text-tertiary)', fontSize: 11, fontFamily: 'var(--font-mono)' }} tickLine={false} axisLine={false} domain={['auto', 'auto']} width={40} />
                   <Tooltip content={<CustomTooltip />} />
                   <Area type="monotone" dataKey="price" stroke="var(--accent-primary)" strokeWidth={2} fill="url(#priceGrad)" />
-                  {visibleSignals.map((sig, i) => {
-                    const point = priceData.find(p => p.date === sig.date)
+                  {displaySignals.map((sig, i) => {
+                    const point = mockPriceData.find(p => p.date === sig.date)
                     if (!point) return null
                     const c = SIGNAL_COLORS[sig.type]
                     return (
@@ -236,7 +255,7 @@ export default function Page2Dig({ onNext }) {
             </div>
             <div className="flex-1 overflow-y-auto space-y-2">
               <AnimatePresence>
-                {visibleSignals.map((sig, i) => (
+                {displaySignals.map((sig, i) => (
                   <motion.div
                     key={i}
                     initial={{ opacity: 0, x: 20 }}
@@ -246,15 +265,15 @@ export default function Page2Dig({ onNext }) {
                     style={{
                       background: 'var(--bg-2)',
                       border: '0.5px solid rgba(255,255,255,0.08)',
-                      borderLeft: `3px solid ${SIGNAL_COLORS[sig.type]}`,
+                      borderLeft: `3px solid ${SIGNAL_COLORS[sig.type] || 'var(--text-tertiary)'}`,
                     }}
                   >
-                    <div className="w-2 h-2 rounded-full flex-shrink-0" style={{ background: SIGNAL_COLORS[sig.type] }} />
+                    <div className="w-2 h-2 rounded-full flex-shrink-0" style={{ background: SIGNAL_COLORS[sig.type] || 'var(--text-tertiary)' }} />
                     <div className="flex-1 min-w-0">
                       <div style={{ fontSize: '12px', color: 'var(--text-tertiary)', fontFamily: 'var(--font-mono)' }}>{sig.date}</div>
                       <div style={{ fontSize: '13px', color: 'var(--text-primary)', fontFamily: 'var(--font-body)' }}>{sig.description}</div>
                     </div>
-                    <div style={{ fontSize: '12px', color: SIGNAL_COLORS[sig.type], fontFamily: 'var(--font-mono)', flexShrink: 0 }}>
+                    <div style={{ fontSize: '12px', color: SIGNAL_COLORS[sig.type] || 'var(--text-tertiary)', fontFamily: 'var(--font-mono)', flexShrink: 0 }}>
                       {(sig.relevance * 100).toFixed(0)}%
                     </div>
                   </motion.div>
@@ -267,7 +286,7 @@ export default function Page2Dig({ onNext }) {
 
       {/* Next button — replaces progress bar when done */}
       <AnimatePresence>
-        {done ? (
+        {displayDone ? (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -291,7 +310,7 @@ export default function Page2Dig({ onNext }) {
         ) : (
           <div className="h-12 flex items-center justify-between px-6" style={{ borderTop: '0.5px solid rgba(255,255,255,0.08)' }}>
             <div style={{ color: 'var(--text-tertiary)', fontSize: '12px', fontFamily: 'var(--font-mono)' }}>
-              {logIndex >= 0 ? researchLogs[logIndex]?.agent : 'Starting'}... {Math.min(agentsDone, 5)}/5 agents
+              {displayLogIndex >= 0 ? displayLogs[displayLogIndex]?.agent : 'Starting'}... {Math.min(agentsDone, 5)}/5 agents
             </div>
             <div className="w-[160px] h-1.5 rounded-full overflow-hidden" style={{ background: 'rgba(255,255,255,0.06)' }}>
               <div className="h-full rounded-full transition-all duration-500" style={{ width: `${Math.min((agentsDone / 5) * 100, 100)}%`, background: 'var(--signal-onchain)' }} />

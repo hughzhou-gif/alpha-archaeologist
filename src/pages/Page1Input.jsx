@@ -130,16 +130,22 @@ function ExampleCard({ title, date, magnitude, accentColor, onClick }) {
   )
 }
 
-export default function Page1Input({ onNext }) {
+export default function Page1Input({ onNext, research }) {
   const [query, setQuery] = useState('')
 
   const handleSubmit = () => {
-    if (query.trim()) onNext()
+    if (query.trim()) {
+      research.start(query)
+      onNext()
+    }
   }
 
   const handleExample = (ex) => {
     setQuery(ex.query)
-    setTimeout(() => onNext(), 300)
+    setTimeout(() => {
+      research.start(ex.query)
+      onNext()
+    }, 300)
   }
 
   return (

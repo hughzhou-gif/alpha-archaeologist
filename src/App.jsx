@@ -7,6 +7,7 @@ import Page3Extract from './pages/Page3Extract'
 import Page4Validate from './pages/Page4Validate'
 import Page5Scan from './pages/Page5Scan'
 import Page6Act from './pages/Page5Act'
+import useAlphaResearch from './hooks/useAlphaResearch'
 
 const pages = [Page1Input, Page2Dig, Page3Extract, Page4Validate, Page5Scan, Page6Act]
 const pageNames = ['Input', 'Dig', 'Extract', 'Validate', 'Scan', 'Act']
@@ -27,6 +28,17 @@ const pageVariants = {
 export default function App() {
   const [currentPage, setCurrentPage] = useState(0)
   const [direction, setDirection] = useState(1)
+  const research = useAlphaResearch()
+
+  // Auto-advance pages when pipeline phases complete
+  useEffect(() => {
+    const phaseToPage = { extract: 2, validate: 3, scan: 4, act: 5 }
+    const target = phaseToPage[research.currentPhase]
+    if (target && target > currentPage) {
+      setDirection(1)
+      setCurrentPage(target)
+    }
+  }, [research.currentPhase])
 
   const goNext = useCallback(() => {
     if (currentPage < pages.length - 1) {
@@ -257,7 +269,7 @@ export default function App() {
               transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
               className="absolute inset-0"
             >
-              <CurrentPageComponent onNext={goNext} onPrev={goPrev} />
+              <CurrentPageComponent onNext={goNext} onPrev={goPrev} research={research} />
             </motion.div>
           </AnimatePresence>
         </div>

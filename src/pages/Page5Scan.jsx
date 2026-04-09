@@ -170,12 +170,38 @@ function ScanProgress({ current, total, done }) {
   )
 }
 
-export default function Page5Scan({ onNext }) {
+export default function Page5Scan({ onNext, research }) {
+  const liveScan = research?.scanData
+
+  // Convert live scan matches to token card format
+  const liveTokens = liveScan?.matches?.map(m => ({
+    token: m.token,
+    matched: m.matched_conditions?.length ?? 0,
+    total: (m.matched_conditions?.length ?? 0) + (m.pending_conditions?.length ?? 0),
+    signals: (m.matched_conditions || []).map(c => {
+      if (/whale|accumul|on.?chain/i.test(c)) return 'onchain'
+      if (/gov|proposal/i.test(c)) return 'governance'
+      if (/social|kol|mention/i.test(c)) return 'social'
+      if (/volume|market/i.test(c)) return 'market'
+      return 'onchain'
+    }),
+  })) ?? []
+
   const [logIndex, setLogIndex] = useState(-1)
   const [visibleTokens, setVisibleTokens] = useState([])
   const [done, setDone] = useState(false)
 
+  // If live data arrived, show results directly
   useEffect(() => {
+    if (liveScan) {
+      setLogIndex(scanLogs.length - 1)
+      setVisibleTokens(liveTokens)
+      setDone(true)
+    }
+  }, [liveScan])
+
+  useEffect(() => {
+    if (liveScan) return
     if (logIndex >= scanLogs.length - 1) return
     const delay = 500 + Math.random() * 500
     const timer = setTimeout(() => {
@@ -188,22 +214,21 @@ export default function Page5Scan({ onNext }) {
       if (next >= scanLogs.length - 1) setDone(true)
     }, delay)
     return () => clearTimeout(timer)
-  }, [logIndex])
+  }, [logIndex, liveScan])
 
   const handleSkip = () => {
     setLogIndex(scanLogs.length - 1)
-    setVisibleTokens(discoveredTokens)
+    setVisibleTokens(liveScan ? liveTokens : discoveredTokens)
     setDone(true)
   }
 
-  // Listen for global skip event from App.jsx tab bar
   useEffect(() => {
     const handler = () => handleSkip()
     window.addEventListener('skip-animation', handler)
     return () => window.removeEventListener('skip-animation', handler)
-  }, [])
+  }, [liveScan])
 
-  useEffect(() => { setLogIndex(0) }, [])
+  useEffect(() => { if (!liveScan) setLogIndex(0) }, [liveScan])
 
   return (
     <div className="h-full flex flex-col pt-12">
