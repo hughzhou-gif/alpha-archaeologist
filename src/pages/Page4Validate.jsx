@@ -477,7 +477,7 @@ function MetricCard({ label, value, unit, threshold, passed, delay }) {
 }
 
 /* ---------- VerdictBanner (added Deploy Scanner button) ---------- */
-function VerdictBanner({ passed, onNext }) {
+function VerdictBanner({ passed, onNext, validate }) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 30 }}
@@ -501,7 +501,7 @@ function VerdictBanner({ passed, onNext }) {
           className="mt-2"
           style={{ fontSize: '14px', color: 'var(--text-primary)', fontFamily: 'var(--font-body)' }}
         >
-          This pattern appeared {liveValidate ? liveValidate.total_pump_events : 8} times in 12 months. {liveValidate ? liveValidate.hit_count : 5} times it preceded a &gt;30% pump. It performs {liveValidate ? liveValidate.lift.toFixed(1) : '3.27'}x better than chance.
+          This pattern appeared {validate ? validate.total_pump_events : 8} times in 12 months. {validate ? validate.hit_count : 5} times it preceded a &gt;30% pump. It performs {validate ? validate.lift.toFixed(1) : '3.27'}x better than chance.
         </motion.div>
       </div>
       <div style={{ display: 'flex', gap: '12px', flexShrink: 0 }}>
@@ -640,7 +640,7 @@ export default function Page4Validate({ onNext, research }) {
                 <MetricCard key={m.label} {...m} delay={i * 0.2} />
               ))}
             </div>
-            {showVerdict && <VerdictBanner passed={liveValidate ? !!liveValidate.passed : true} onNext={onNext} />}
+            {showVerdict && <VerdictBanner passed={liveValidate ? !!liveValidate.passed : true} onNext={onNext} validate={liveValidate} />}
           </motion.div>
         )}
       </AnimatePresence>
