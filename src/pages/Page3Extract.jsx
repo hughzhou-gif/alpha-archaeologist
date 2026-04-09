@@ -11,13 +11,13 @@ const SOURCE_COLORS = {
 }
 
 const CATEGORY_ICONS = {
-  onchain: { icon: Anchor, sourceType: 'onchain' },
-  social: { icon: MessageCircle, sourceType: 'social' },
-  governance: { icon: Landmark, sourceType: 'governance' },
-  market: { icon: BarChart2, sourceType: 'market' },
-  market_structure: { icon: BarChart2, sourceType: 'market' },
-  news: { icon: MessageCircle, sourceType: 'social' },
-  development: { icon: Landmark, sourceType: 'governance' },
+  onchain: { icon: Anchor, sourceType: 'onchain', label: 'On-Chain' },
+  social: { icon: MessageCircle, sourceType: 'social', label: 'Social' },
+  governance: { icon: Landmark, sourceType: 'governance', label: 'Governance' },
+  market: { icon: BarChart2, sourceType: 'market', label: 'Market' },
+  market_structure: { icon: BarChart2, sourceType: 'market', label: 'Market' },
+  news: { icon: MessageCircle, sourceType: 'social', label: 'News' },
+  development: { icon: Landmark, sourceType: 'governance', label: 'Dev' },
 }
 
 const DEFAULT_PHASE_CONFIG = [
@@ -40,6 +40,7 @@ function getPhaseConfig(signals) {
       label: sig.description || sig.id,
       phase: `PHASE ${i + 1}`,
       sourceType: cat.sourceType,
+      categoryLabel: cat.label,
     }
   })
 }
@@ -71,7 +72,13 @@ function PhaseNode({ config, signal, index, isVisible }) {
             <IconComp size={32} strokeWidth={1.5} style={{ color }} />
           </div>
 
-          <div style={{ fontSize: '10px', color: 'var(--text-tertiary)', fontFamily: 'var(--font-mono)', letterSpacing: '1px', marginTop: 16 }}>
+          {config.categoryLabel && (
+            <div className="rounded-full" style={{ fontSize: '10px', fontFamily: 'var(--font-mono)', fontWeight: 600, color, background: `${color}15`, padding: '3px 10px', marginTop: 12 }}>
+              {config.categoryLabel}
+            </div>
+          )}
+
+          <div style={{ fontSize: '10px', color: 'var(--text-tertiary)', fontFamily: 'var(--font-mono)', letterSpacing: '1px', marginTop: config.categoryLabel ? 8 : 16 }}>
             {config.phase}
           </div>
           <div style={{ fontSize: '14px', color: 'var(--text-primary)', fontFamily: 'var(--font-body)', textAlign: 'center', lineHeight: 1.3, marginTop: 8, fontWeight: 600 }}>
