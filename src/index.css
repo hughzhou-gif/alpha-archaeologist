@@ -1,0 +1,116 @@
+@import "tailwindcss";
+
+/* Surf Design System — Dark Theme Tokens */
+:root {
+  --bg-base: #000000;
+  --bg-1: #101010;
+  --bg-2: #111111;
+  --bg-3: #171717;
+  --surface-hover: rgba(255, 255, 255, 0.06);
+  --surface-elevated: rgba(255, 255, 255, 0.10);
+  --surface-active: rgba(255, 255, 255, 0.12);
+  --text-primary: #E7E7E7;
+  --text-secondary: #AAAAAA;
+  --text-tertiary: #7A7A7A;
+  --text-disabled: #555555;
+  --border-default: rgba(255, 255, 255, 0.08);
+  --border-medium: rgba(255, 255, 255, 0.10);
+  --accent-primary: #FF2882;
+  --accent-primary-muted: rgba(255, 40, 130, 0.10);
+  --semantic-positive: #00C853;
+  --semantic-negative: #FF4444;
+  --semantic-info: #6BA4B8;
+  --semantic-link: #4A90D9;
+
+  /* Signal source colors */
+  --signal-onchain: #4A90D9;
+  --signal-social: #00C853;
+  --signal-governance: #8B5CF6;
+  --signal-market: #F59E0B;
+  --signal-dev: #EC4899;
+
+  /* Dot colors */
+  --dot-miss: #4B5563;
+
+  /* Typography */
+  --font-body: 'Lato', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+}
+
+@theme {
+  --color-bg-base: var(--bg-base);
+  --color-bg-1: var(--bg-1);
+  --color-bg-2: var(--bg-2);
+  --color-bg-3: var(--bg-3);
+  --color-surface-hover: var(--surface-hover);
+  --color-surface-elevated: var(--surface-elevated);
+  --color-surface-active: var(--surface-active);
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-tertiary: var(--text-tertiary);
+  --color-border-default: var(--border-default);
+  --color-border-medium: var(--border-medium);
+  --color-accent: var(--accent-primary);
+  --color-accent-muted: var(--accent-primary-muted);
+  --color-positive: var(--semantic-positive);
+  --color-negative: var(--semantic-negative);
+  --color-info: var(--semantic-info);
+  --color-link: var(--semantic-link);
+  --color-signal-onchain: var(--signal-onchain);
+  --color-signal-social: var(--signal-social);
+  --color-signal-governance: var(--signal-governance);
+  --color-signal-market: var(--signal-market);
+  --color-signal-dev: var(--signal-dev);
+  --color-dot-miss: var(--dot-miss);
+  --font-body: var(--font-body);
+  --font-mono: var(--font-mono);
+}
+
+*, *::before, *::after {
+  font-family: inherit;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-body);
+  background: var(--bg-base);
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow: hidden;
+  height: 100vh;
+}
+
+#root {
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* Dark scrollbar */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: var(--bg-2); }
+::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.12); border-radius: 4px; }
+
+/* Heading defaults (no !important — allow inline overrides) */
+h1 { font-weight: 700; }
+h2 { font-weight: 700; }
+h3 { font-weight: 600; }
+h4 { font-weight: 600; }
+
+/* Glow pulse keyframe */
+@keyframes glow-pulse {
+  0%, 100% { box-shadow: 0 0 16px rgba(255, 40, 130, 0.20); }
+  50% { box-shadow: 0 0 32px rgba(255, 40, 130, 0.40); }
+}
+
+@keyframes flow-light {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(200%); }
+}
+
+@keyframes dash-flow {
+  0% { stroke-dashoffset: 8; }
+  100% { stroke-dashoffset: 0; }
+}
+

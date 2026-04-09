@@ -1,0 +1,295 @@
+import { useState, useEffect, useRef } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { AreaChart, Area, XAxis, YAxis, ResponsiveContainer, Tooltip, ReferenceDot } from 'recharts'
+import { researchLogs, signals, priceData, signalTriggerMap } from '../data/mockData'
+
+import AgentIcon from '../components/AgentIcon'
+
+const SIGNAL_COLORS = {
+  onchain: 'var(--signal-onchain)',
+  social: 'var(--signal-social)',
+  governance: 'var(--signal-governance)',
+  market: 'var(--signal-market)',
+  dev: 'var(--signal-dev)',
+}
+
+function ResearchLog({ logs, currentIndex }) {
+  const containerRef = useRef(null)
+
+  useEffect(() => {
+    if (containerRef.current) {
+      containerRef.current.scrollTop = containerRef.current.scrollHeight
+    }
+  }, [currentIndex])
+
+  return (
+    <div className="h-full flex flex-col">
+      <div className="mb-4" style={{ color: 'var(--text-tertiary)', fontSize: '11px', letterSpacing: '1.5px', fontFamily: 'var(--font-mono)' }}>
+        RESEARCH LOG
+      </div>
+      <div ref={containerRef} className="flex-1 overflow-y-auto pr-2" style={{ fontFamily: 'var(--font-mono)', fontSize: '14px' }}>
+        <AnimatePresence>
+          {logs.slice(0, currentIndex + 1).map((log, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.2 }}
+              className="flex gap-3 py-1.5 px-2 rounded"
+              style={{
+                borderLeft: log.isHighlight ? `3px solid ${log.agentColor}` : '3px solid transparent',
+                background: log.isHighlight ? 'rgba(255,255,255,0.04)' : 'transparent',
+              }}
+            >
+              <span style={{ color: 'var(--text-tertiary)', fontSize: '12px', flexShrink: 0 }}>{log.time}</span>
+              <AgentIcon name={log.icon} color={log.agentColor} />
+              <span style={{ color: log.agentColor, flexShrink: 0, fontWeight: 600, fontSize: '12px' }}>{log.agent}</span>
+              <span style={{ color: 'var(--text-secondary)' }}>{log.message}</span>
+            </motion.div>
+          ))}
+        </AnimatePresence>
+      </div>
+    </div>
+  )
+}
+
+function CustomTooltip({ active, payload }) {
+  if (!active || !payload?.length) return null
+  const d = payload[0].payload
+  return (
+    <div className="rounded-lg p-3" style={{ background: 'var(--bg-2)', border: '1px solid var(--border-default)', maxWidth: 200 }}>
+      <div style={{ color: 'var(--text-primary)', fontSize: '13px', fontFamily: 'var(--font-mono)' }}>{d.date}</div>
+      <div style={{ color: 'var(--semantic-positive)', fontSize: '14px', fontWeight: 700, fontFamily: 'var(--font-mono)' }}>${d.price}</div>
+    </div>
+  )
+}
+
+function ProgressBar({ current, total, currentAgent, done }) {
+  const pct = Math.min((current / total) * 100, 100)
+  return (
+    <div className="h-12 flex items-center justify-between px-6" style={{
+      background: 'var(--bg-2)',
+      borderTop: '1px solid rgba(255,255,255,0.08)',
+    }}>
+      <div style={{ color: 'var(--text-secondary)', fontSize: '13px', fontFamily: 'var(--font-body)' }}>
+        {done ? `Research complete. ${signals.length} signals found across 5 sources.` : `${currentAgent}... ${current}/${total} agents complete`}
+      </div>
+      <div className="w-[200px] h-2 rounded-full overflow-hidden relative" style={{ background: 'var(--border-default)' }}>
+        <div className="h-full rounded-full transition-all duration-500 relative overflow-hidden" style={{ width: `${pct}%`, background: 'var(--signal-onchain)' }}>
+          {!done && (
+            <div className="absolute inset-0" style={{
+              background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent)',
+              animation: 'flow-light 1.5s infinite',
+            }} />
+          )}
+        </div>
+      </div>
+    </div>
+  )
+}
+
+export default function Page2Dig({ onNext }) {
+  const [logIndex, setLogIndex] = useState(-1)
+  const [visibleSignals, setVisibleSignals] = useState([])
+  const [done, setDone] = useState(false)
+
+  useEffect(() => {
+    if (logIndex >= researchLogs.length - 1) return
+    const delay = 800 + Math.random() * 700
+    const timer = setTimeout(() => {
+      const next = logIndex + 1
+      setLogIndex(next)
+
+      // Check if this log triggers a signal
+      const trigger = signalTriggerMap.find(t => t.logIndex === next)
+      if (trigger) {
+        setVisibleSignals(prev => [...prev, signals[trigger.signalIndex]])
+      }
+
+      if (next >= researchLogs.length - 1) {
+        setDone(true)
+      }
+    }, delay)
+    return () => clearTimeout(timer)
+  }, [logIndex])
+
+  const handleSkip = () => {
+    setLogIndex(researchLogs.length - 1)
+    const allSignals = signalTriggerMap.map(t => signals[t.signalIndex])
+    setVisibleSignals(allSignals)
+    setDone(true)
+  }
+
+  // Listen for global skip event from App.jsx tab bar
+  useEffect(() => {
+    const handler = () => handleSkip()
+    window.addEventListener('skip-animation', handler)
+    return () => window.removeEventListener('skip-animation', handler)
+  }, [])
+
+  // Start playback
+  useEffect(() => { setLogIndex(0) }, [])
+
+  const agentsDone = new Set(researchLogs.slice(0, logIndex + 1).filter(l => l.message.includes('complete') || l.message.includes('Research complete')).map(l => l.agent)).size
+
+  const startPrice = priceData[0]?.price ?? 0
+  const endPrice = priceData[priceData.length - 1]?.price ?? 0
+  const pctChange = startPrice > 0 ? (((endPrice - startPrice) / startPrice) * 100).toFixed(0) : 0
+
+  return (
+    <div className="h-full flex flex-col pt-12">
+      <div className="flex-1 flex min-h-0">
+        {/* Left panel: Active Extraction */}
+        <div className="w-[45%] flex flex-col overflow-hidden" style={{ borderRight: '1px solid var(--border-default)' }}>
+          {/* Left header */}
+          <div className="px-6 pt-6 pb-4" style={{ borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
+            <div style={{ fontSize: '20px', fontWeight: 700, color: 'var(--text-primary)', fontFamily: 'var(--font-body)' }}>
+              Active Extraction
+            </div>
+            <div className="flex gap-4 mt-2" style={{ fontSize: '11px', color: 'var(--text-tertiary)', fontFamily: 'var(--font-mono)', letterSpacing: '0.5px' }}>
+              <span>TARGET: PENDLE/USDT</span>
+              <span style={{ opacity: 0.4 }}>·</span>
+              <span>TIMEFRAME: 7d</span>
+              <span style={{ opacity: 0.4 }}>·</span>
+              <span>AGENTS: {Math.min(agentsDone, 5)}/5</span>
+            </div>
+          </div>
+          {/* Terminal log */}
+          <div className="flex-1 min-h-0 px-6 py-4">
+            <div className="h-full rounded-[14px] p-4" style={{
+              background: 'var(--bg-2)',
+              border: '0.5px solid rgba(255,255,255,0.08)',
+            }}>
+              <ResearchLog logs={researchLogs} currentIndex={logIndex} />
+            </div>
+          </div>
+        </div>
+
+        {/* Right panel */}
+        <div className="w-[55%] flex flex-col overflow-hidden">
+          {/* Asset price highlight */}
+          <div className="px-6 pt-6 pb-4" style={{ borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
+            <div className="flex items-baseline gap-3">
+              <span style={{
+                fontSize: '20px',
+                fontWeight: 700,
+                fontFamily: 'var(--font-mono)',
+                color: 'var(--text-primary)',
+              }}>
+                ${startPrice.toFixed(2)} → ${endPrice.toFixed(2)}
+              </span>
+              <span style={{
+                fontSize: '14px',
+                fontWeight: 600,
+                fontFamily: 'var(--font-mono)',
+                color: 'var(--semantic-positive)',
+              }}>
+                +{pctChange}%
+              </span>
+            </div>
+          </div>
+
+          {/* Chart area */}
+          <div className="px-6 pt-4" style={{ height: '48%', minHeight: 0 }}>
+            <div className="h-full rounded-[14px] p-4" style={{
+              background: 'var(--bg-2)',
+              border: '0.5px solid rgba(255,255,255,0.08)',
+            }}>
+              <ResponsiveContainer width="100%" height="100%">
+                <AreaChart data={priceData} margin={{ top: 8, right: 16, bottom: 0, left: 0 }}>
+                  <defs>
+                    <linearGradient id="priceGrad" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stopColor="var(--accent-primary)" stopOpacity={0.3} />
+                      <stop offset="100%" stopColor="var(--accent-primary)" stopOpacity={0} />
+                    </linearGradient>
+                  </defs>
+                  <XAxis dataKey="date" tick={{ fill: 'var(--text-tertiary)', fontSize: 11, fontFamily: 'var(--font-mono)' }} tickLine={false} axisLine={false} interval={4} />
+                  <YAxis tick={{ fill: 'var(--text-tertiary)', fontSize: 11, fontFamily: 'var(--font-mono)' }} tickLine={false} axisLine={false} domain={['auto', 'auto']} width={40} />
+                  <Tooltip content={<CustomTooltip />} />
+                  <Area type="monotone" dataKey="price" stroke="var(--accent-primary)" strokeWidth={2} fill="url(#priceGrad)" />
+                  {visibleSignals.map((sig, i) => {
+                    const point = priceData.find(p => p.date === sig.date)
+                    if (!point) return null
+                    const c = SIGNAL_COLORS[sig.type]
+                    return (
+                      <ReferenceDot
+                        key={i}
+                        x={sig.date}
+                        y={point.price}
+                        r={5}
+                        fill={c}
+                        stroke={c}
+                        strokeWidth={2}
+                        fillOpacity={0.8}
+                      />
+                    )
+                  })}
+                </AreaChart>
+              </ResponsiveContainer>
+            </div>
+          </div>
+
+          {/* Critical Signals section */}
+          <div className="flex-1 min-h-0 px-6 pt-4 pb-4 flex flex-col">
+            <div className="mb-3" style={{ color: 'var(--text-tertiary)', fontSize: '11px', letterSpacing: '1.5px', fontFamily: 'var(--font-mono)' }}>
+              CRITICAL SIGNALS
+            </div>
+            <div className="flex-1 overflow-y-auto space-y-2">
+              <AnimatePresence>
+                {visibleSignals.map((sig, i) => (
+                  <motion.div
+                    key={i}
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ type: 'spring', stiffness: 200, damping: 20 }}
+                    className="flex items-center gap-3 px-3 py-2 rounded-lg"
+                    style={{
+                      background: 'var(--bg-2)',
+                      border: '0.5px solid rgba(255,255,255,0.08)',
+                      borderLeft: `3px solid ${SIGNAL_COLORS[sig.type]}`,
+                    }}
+                  >
+                    <div className="w-2 h-2 rounded-full flex-shrink-0" style={{ background: SIGNAL_COLORS[sig.type] }} />
+                    <div className="flex-1 min-w-0">
+                      <div style={{ fontSize: '12px', color: 'var(--text-tertiary)', fontFamily: 'var(--font-mono)' }}>{sig.date}</div>
+                      <div style={{ fontSize: '13px', color: 'var(--text-primary)', fontFamily: 'var(--font-body)' }}>{sig.description}</div>
+                    </div>
+                    <div style={{ fontSize: '12px', color: SIGNAL_COLORS[sig.type], fontFamily: 'var(--font-mono)', flexShrink: 0 }}>
+                      {(sig.relevance * 100).toFixed(0)}%
+                    </div>
+                  </motion.div>
+                ))}
+              </AnimatePresence>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Bottom progress */}
+      <ProgressBar current={agentsDone} total={6} currentAgent={logIndex >= 0 ? researchLogs[logIndex]?.agent : 'Starting'} done={done} />
+
+      {/* Next button */}
+      <AnimatePresence>
+        {done && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="fixed bottom-20 right-8"
+          >
+            <button
+              onClick={onNext}
+              className="px-5 py-2.5 rounded-[12px] text-sm font-semibold text-white cursor-pointer transition-all duration-200 hover:opacity-80"
+              style={{
+                fontFamily: 'var(--font-mono)',
+                background: 'var(--signal-onchain)',
+                boxShadow: '0 0 16px rgba(74, 144, 217, 0.3)',
+              }}
+            >
+              Extract Pattern →
+            </button>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  )
+}
