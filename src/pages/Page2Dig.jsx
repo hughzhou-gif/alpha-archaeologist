@@ -107,19 +107,20 @@ function ProgressBar({ current, total, currentAgent, done }) {
   )
 }
 
+// Dig-phase agent types (not validate/scan/system)
+const DIG_AGENTS = new Set(['onchain', 'social', 'market', 'price', 'news', 'governance'])
+
 export default function Page2Dig({ onNext, research }) {
   const isLive = research?.status === 'running' || research?.status === 'completed'
   const liveLogs = research?.logs ?? []
   const liveDigData = research?.digData
   const liveEvent = research?.eventData
 
-  // Live mode: logs stream in from SSE, no timer needed
-  // Mock mode: use original timer-based playback
   const [logIndex, setLogIndex] = useState(-1)
   const [visibleSignals, setVisibleSignals] = useState([])
   const [done, setDone] = useState(false)
 
-  // Derive signals from live dig data
+  // All signals from dig data
   const liveSignals = liveDigData?.signals?.map(s => ({
     date: s.timestamp?.slice(5, 10) || '',
     type: s.category,
@@ -127,10 +128,45 @@ export default function Page2Dig({ onNext, research }) {
     relevance: s.relevance_score ?? 0.8,
   })) ?? []
 
-  // In live mode, done when dig phase completes
-  const liveDone = !!liveDigData
+  // Filter dig-phase logs only (exclude validate/scan/system)
+  const digPhaseLogs = isLive
+    ? liveLogs.filter(l => DIG_AGENTS.has(l.agentType) || l.agent === 'System' || l.agent === 'Event Confirmer')
+    : mockLogs
 
-  // Mock playback (only when not live)
+  // Build a map: which dig-phase highlight log index triggers which signal
+  // Spread signals evenly across highlighted logs
+  const highlightIndices = digPhaseLogs
+    .map((l, i) => l.isHighlight ? i : -1)
+    .filter(i => i >= 0)
+
+  // Live mode: replay dig-phase logs with timer, reveal signal on each highlight
+  useEffect(() => {
+    if (!isLive) return
+    if (digPhaseLogs.length === 0) return
+    let idx = 0
+    let sigIdx = 0
+    const sigsPerHighlight = Math.max(1, Math.ceil(liveSignals.length / Math.max(highlightIndices.length, 1)))
+
+    const interval = setInterval(() => {
+      if (idx < digPhaseLogs.length) {
+        setLogIndex(idx)
+        // When we hit a highlighted log, reveal next signal(s)
+        if (highlightIndices.includes(idx) && sigIdx < liveSignals.length) {
+          const nextBatch = liveSignals.slice(sigIdx, sigIdx + sigsPerHighlight)
+          setVisibleSignals(prev => [...prev, ...nextBatch])
+          sigIdx += sigsPerHighlight
+        }
+        idx++
+      } else {
+        clearInterval(interval)
+        setVisibleSignals(liveSignals) // ensure all shown
+        setDone(true)
+      }
+    }, 120)
+    return () => clearInterval(interval)
+  }, [isLive, digPhaseLogs.length, liveSignals.length])
+
+  // Mock playback
   useEffect(() => {
     if (isLive) return
     if (logIndex >= mockLogs.length - 1) return
@@ -146,9 +182,8 @@ export default function Page2Dig({ onNext, research }) {
   }, [logIndex, isLive])
 
   const handleSkip = () => {
-    if (isLive) return
-    setLogIndex(mockLogs.length - 1)
-    setVisibleSignals(signalTriggerMap.map(t => mockSignals[t.signalIndex]))
+    setLogIndex((isLive ? digPhaseLogs : mockLogs).length - 1)
+    setVisibleSignals(isLive ? liveSignals : signalTriggerMap.map(t => mockSignals[t.signalIndex]))
     setDone(true)
   }
 
@@ -156,15 +191,14 @@ export default function Page2Dig({ onNext, research }) {
     const handler = () => handleSkip()
     window.addEventListener('skip-animation', handler)
     return () => window.removeEventListener('skip-animation', handler)
-  }, [isLive])
+  }, [isLive, liveSignals.length])
 
   useEffect(() => { if (!isLive) setLogIndex(0) }, [isLive])
 
-  // Choose between live and mock data
-  const displayLogs = isLive ? liveLogs : mockLogs
-  const displayLogIndex = isLive ? liveLogs.length - 1 : logIndex
-  const displaySignals = isLive ? liveSignals : visibleSignals
-  const displayDone = isLive ? liveDone : done
+  const displayLogs = isLive ? digPhaseLogs : mockLogs
+  const displayLogIndex = logIndex
+  const displaySignals = visibleSignals
+  const displayDone = done
 
   const agentsDone = new Set(displayLogs.slice(0, displayLogIndex + 1).filter(l => l?.message?.includes('complete') || l?.message?.includes('Research complete')).map(l => l.agent)).size
 
