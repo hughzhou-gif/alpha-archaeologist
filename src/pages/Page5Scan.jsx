@@ -48,7 +48,7 @@ const SIGNAL_LABELS = {
   market: 'Market',
 }
 
-function ScanLog({ currentIndex }) {
+function ScanLog({ logs, currentIndex }) {
   const containerRef = useRef(null)
 
   useEffect(() => {
@@ -61,24 +61,27 @@ function ScanLog({ currentIndex }) {
         MARKET SCAN
       </div>
       <div ref={containerRef} className="flex-1 overflow-y-auto pr-2" style={{ fontFamily: 'var(--font-mono)', fontSize: '14px' }}>
-        {scanLogs.slice(0, currentIndex + 1).map((log, i) => (
-          <motion.div
-            key={i}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.15 }}
-            className="flex gap-3 py-1.5 px-2 rounded"
-            style={{
-              borderLeft: log.isHighlight ? '3px solid var(--semantic-positive)' : '3px solid transparent',
-              background: log.isHighlight ? 'rgba(0,200,83,0.04)' : 'transparent',
-            }}
-          >
-            <span style={{ color: 'var(--text-tertiary)', fontSize: '12px', flexShrink: 0 }}>{log.time}</span>
-            <AgentIcon name={log.icon} color={log.agentColor} />
-            <span style={{ color: log.agentColor, flexShrink: 0, fontWeight: 600, fontSize: '12px' }}>{log.agent}</span>
-            <span style={{ color: 'var(--text-secondary)' }}>{log.message}</span>
-          </motion.div>
-        ))}
+        {logs.slice(0, currentIndex + 1).map((log, i) => {
+          const color = log.agentColor || SIGNAL_COLORS[log.agentType] || 'var(--accent-primary)'
+          return (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.15 }}
+              className="flex gap-3 py-1.5 px-2 rounded"
+              style={{
+                borderLeft: log.isHighlight ? '3px solid var(--semantic-positive)' : '3px solid transparent',
+                background: log.isHighlight ? 'rgba(0,200,83,0.04)' : 'transparent',
+              }}
+            >
+              <span style={{ color: 'var(--text-tertiary)', fontSize: '12px', flexShrink: 0 }}>{log.time}</span>
+              <AgentIcon name={log.icon} color={color} />
+              <span style={{ color, flexShrink: 0, fontWeight: 600, fontSize: '12px' }}>{log.agent}</span>
+              <span style={{ color: 'var(--text-secondary)' }}>{log.message}</span>
+            </motion.div>
+          )
+        })}
       </div>
     </div>
   )
@@ -172,6 +175,20 @@ function ScanProgress({ current, total, done }) {
 
 export default function Page5Scan({ onNext, research }) {
   const liveScan = research?.scanData
+  const allLogs = research?.logs ?? []
+
+  // Extract scan-phase logs from the full log stream
+  const liveScanLogs = allLogs.filter(l => l.agentType === 'scan').map(l => ({
+    time: l.time || '',
+    agent: l.agent || 'Scanner',
+    icon: l.icon || 'search',
+    agentColor: SIGNAL_COLORS[l.agentType] || 'var(--accent-primary)',
+    message: l.message || '',
+    isHighlight: l.isHighlight || l.message?.includes('🎯'),
+  }))
+
+  const isLive = liveScanLogs.length > 0
+  const activeLogs = isLive ? liveScanLogs : scanLogs
 
   // Convert live scan matches to token card format
   const liveTokens = liveScan?.matches?.map(m => ({
@@ -191,18 +208,32 @@ export default function Page5Scan({ onNext, research }) {
   const [visibleTokens, setVisibleTokens] = useState([])
   const [done, setDone] = useState(false)
 
-  // If live data arrived, show results directly
+  // If live data arrived, show results with log replay
   useEffect(() => {
-    if (liveScan) {
-      setLogIndex(scanLogs.length - 1)
+    if (liveScan && isLive) {
+      setVisibleTokens(liveTokens)
+      // Replay scan logs with delay
+      let idx = 0
+      const interval = setInterval(() => {
+        if (idx < liveScanLogs.length) {
+          setLogIndex(idx)
+          idx++
+        } else {
+          clearInterval(interval)
+          setDone(true)
+        }
+      }, 60)
+      return () => clearInterval(interval)
+    } else if (liveScan) {
+      setLogIndex(activeLogs.length - 1)
       setVisibleTokens(liveTokens)
       setDone(true)
     }
   }, [liveScan])
 
   useEffect(() => {
-    if (liveScan) return
-    if (logIndex >= scanLogs.length - 1) return
+    if (isLive) return
+    if (logIndex >= activeLogs.length - 1) return
     const delay = 500 + Math.random() * 500
     const timer = setTimeout(() => {
       const next = logIndex + 1
@@ -211,13 +242,13 @@ export default function Page5Scan({ onNext, research }) {
       const found = discoveredTokens.find(t => t.logIndex === next)
       if (found) setVisibleTokens(prev => [...prev, found])
 
-      if (next >= scanLogs.length - 1) setDone(true)
+      if (next >= activeLogs.length - 1) setDone(true)
     }, delay)
     return () => clearTimeout(timer)
-  }, [logIndex, liveScan])
+  }, [logIndex, isLive])
 
   const handleSkip = () => {
-    setLogIndex(scanLogs.length - 1)
+    setLogIndex(activeLogs.length - 1)
     setVisibleTokens(liveScan ? liveTokens : discoveredTokens)
     setDone(true)
   }
@@ -226,9 +257,9 @@ export default function Page5Scan({ onNext, research }) {
     const handler = () => handleSkip()
     window.addEventListener('skip-animation', handler)
     return () => window.removeEventListener('skip-animation', handler)
-  }, [liveScan])
+  }, [liveScan, isLive])
 
-  useEffect(() => { if (!liveScan) setLogIndex(0) }, [liveScan])
+  useEffect(() => { if (!isLive) setLogIndex(0) }, [isLive])
 
   return (
     <div className="h-full flex flex-col pt-12">
@@ -239,7 +270,7 @@ export default function Page5Scan({ onNext, research }) {
             background: 'var(--bg-2)',
             border: '0.5px solid rgba(255,255,255,0.08)',
           }}>
-            <ScanLog currentIndex={logIndex} />
+            <ScanLog logs={activeLogs} currentIndex={logIndex} />
           </div>
         </div>
 
@@ -278,7 +309,7 @@ export default function Page5Scan({ onNext, research }) {
         </div>
       </div>
 
-      <ScanProgress current={logIndex + 1} total={scanLogs.length} done={done} />
+      <ScanProgress current={logIndex + 1} total={activeLogs.length} done={done} />
 
       <AnimatePresence>
         {done && (
