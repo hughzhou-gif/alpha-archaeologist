@@ -122,12 +122,24 @@ export default function Page2Dig({ onNext, research }) {
   const [done, setDone] = useState(false)
 
   // All signals from dig data
-  const liveSignals = liveDigData?.signals?.map(s => ({
-    date: s.timestamp?.slice(5, 10) || '',
-    type: s.category,
-    description: s.description,
-    relevance: s.relevance_score ?? 0.8,
-  })) ?? []
+  const liveSignals = liveDigData?.signals?.map(s => {
+    // Convert timestamp to "Mon DD" format to match price chart
+    let date = ''
+    if (s.timestamp) {
+      const ts = s.timestamp
+      const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
+      let d = null
+      if (/^\d{4}-\d{2}-\d{2}/.test(ts)) {
+        d = new Date(ts + 'T00:00:00Z')
+      } else if (/^\d{9,}$/.test(ts)) {
+        d = new Date(parseInt(ts) * 1000)
+      }
+      if (d && !isNaN(d)) {
+        date = `${months[d.getUTCMonth()]} ${String(d.getUTCDate()).padStart(2, '0')}`
+      }
+    }
+    return { date, type: s.category, description: s.description, relevance: s.relevance_score ?? 0.8 }
+  }) ?? []
 
   // Filter dig-phase logs only (exclude validate/scan/system)
   const digPhaseLogs = isLive
