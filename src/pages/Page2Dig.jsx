@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { AreaChart, Area, XAxis, YAxis, ResponsiveContainer, Tooltip, ReferenceDot } from 'recharts'
 import { researchLogs as mockLogs, signals as mockSignals, priceData as mockPriceData, signalTriggerMap } from '../data/mockData'
+import cachedRuns from '../data/cachedRuns.json'
 
 import AgentIcon from '../components/AgentIcon'
 
@@ -139,31 +140,36 @@ export default function Page2Dig({ onNext, research }) {
     .map((l, i) => l.isHighlight ? i : -1)
     .filter(i => i >= 0)
 
-  // Live mode: replay dig-phase logs with timer, reveal signal on each highlight
+  // Live mode: replay dig-phase logs with natural timing
   useEffect(() => {
     if (!isLive) return
     if (digPhaseLogs.length === 0) return
     let idx = 0
     let sigIdx = 0
+    let cancelled = false
     const sigsPerHighlight = Math.max(1, Math.ceil(liveSignals.length / Math.max(highlightIndices.length, 1)))
 
-    const interval = setInterval(() => {
+    function tick() {
+      if (cancelled) return
       if (idx < digPhaseLogs.length) {
         setLogIndex(idx)
-        // When we hit a highlighted log, reveal next signal(s)
         if (highlightIndices.includes(idx) && sigIdx < liveSignals.length) {
           const nextBatch = liveSignals.slice(sigIdx, sigIdx + sigsPerHighlight)
           setVisibleSignals(prev => [...prev, ...nextBatch])
           sigIdx += sigsPerHighlight
         }
         idx++
+        // Variable delay: highlights pause longer, normal logs are faster
+        const isHL = highlightIndices.includes(idx - 1)
+        const delay = isHL ? 600 + Math.random() * 400 : 150 + Math.random() * 250
+        setTimeout(tick, delay)
       } else {
-        clearInterval(interval)
-        setVisibleSignals(liveSignals) // ensure all shown
+        setVisibleSignals(liveSignals)
         setDone(true)
       }
-    }, 120)
-    return () => clearInterval(interval)
+    }
+    tick()
+    return () => { cancelled = true }
   }, [isLive, digPhaseLogs.length, liveSignals.length])
 
   // Mock playback
@@ -202,8 +208,13 @@ export default function Page2Dig({ onNext, research }) {
 
   const agentsDone = new Set(displayLogs.slice(0, displayLogIndex + 1).filter(l => l?.message?.includes('complete') || l?.message?.includes('Research complete')).map(l => l.agent)).size
 
-  const startPrice = mockPriceData[0]?.price ?? 0
-  const endPrice = mockPriceData[mockPriceData.length - 1]?.price ?? 0
+  // Use cached price data for the token, or fall back to mock
+  const tokenName = liveEvent?.token || ''
+  const livePriceData = cachedRuns[tokenName]?.priceData
+  const priceData = (isLive && livePriceData?.length) ? livePriceData : mockPriceData
+
+  const startPrice = priceData[0]?.price ?? 0
+  const endPrice = priceData[priceData.length - 1]?.price ?? 0
   const pctChange = isLive && liveEvent
     ? (liveEvent.change_pct ?? 0).toFixed(0)
     : startPrice > 0 ? (((endPrice - startPrice) / startPrice) * 100).toFixed(0) : 0
@@ -219,7 +230,7 @@ export default function Page2Dig({ onNext, research }) {
               Active Extraction
             </div>
             <div className="flex gap-4 mt-2" style={{ fontSize: '11px', color: 'var(--text-tertiary)', fontFamily: 'var(--font-mono)', letterSpacing: '0.5px' }}>
-              <span>TARGET: PENDLE/USDT</span>
+              <span>TARGET: {tokenName || 'PENDLE'}/USDT</span>
               <span style={{ opacity: 0.4 }}>·</span>
               <span>TIMEFRAME: 7d</span>
               <span style={{ opacity: 0.4 }}>·</span>
@@ -268,7 +279,7 @@ export default function Page2Dig({ onNext, research }) {
               border: '0.5px solid rgba(255,255,255,0.08)',
             }}>
               <ResponsiveContainer width="100%" height="100%">
-                <AreaChart data={mockPriceData} margin={{ top: 8, right: 16, bottom: 0, left: 0 }}>
+                <AreaChart data={priceData} margin={{ top: 8, right: 16, bottom: 0, left: 0 }}>
                   <defs>
                     <linearGradient id="priceGrad" x1="0" y1="0" x2="0" y2="1">
                       <stop offset="0%" stopColor="var(--accent-primary)" stopOpacity={0.3} />
@@ -280,7 +291,7 @@ export default function Page2Dig({ onNext, research }) {
                   <Tooltip content={<CustomTooltip />} />
                   <Area type="monotone" dataKey="price" stroke="var(--accent-primary)" strokeWidth={2} fill="url(#priceGrad)" />
                   {displaySignals.map((sig, i) => {
-                    const point = mockPriceData.find(p => p.date === sig.date)
+                    const point = priceData.find(p => p.date === sig.date)
                     if (!point) return null
                     const c = SIGNAL_COLORS[sig.type]
                     return (
