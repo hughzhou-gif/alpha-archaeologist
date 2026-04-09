@@ -212,12 +212,25 @@ export default function Page5Act({ research }) {
         ? c.waiting_for.replace(/^Waiting for:\s*/i, '').split(',').map(s => s.trim()).filter(Boolean)
         : []
 
+    // Derive confirmed signals: all pattern conditions minus waiting ones
+    const allConditions = research?.extractData?.conditions || []
+    const confirmedSignals = allConditions
+      .filter(cond => !waitingFor.includes(cond.signal_type))
+      .map(cond => ({
+        name: cond.signal_type.replace(/_/g, ' '),
+        status: 'confirmed',
+        detail: cond.description || cond.signal_type,
+      }))
+
     return {
       token: c.token,
       matchProgress: { confirmed, total },
-      signals: waitingFor.map(w => ({
-        name: w, status: 'waiting', detail: 'waiting...',
-      })),
+      signals: [
+        ...confirmedSignals,
+        ...waitingFor.map(w => ({
+          name: w.replace(/_/g, ' '), status: 'waiting', detail: 'waiting...',
+        })),
+      ],
       winRate: Math.round((c.historical_win_rate ?? 0.625) * 1000) / 10,
       avgMove: '+' + Math.round((c.historical_win_rate ?? 0.6) * 200) + '%',
       avgLead: '4.2 days',
