@@ -1,4 +1,5 @@
 import { useState, useCallback, useRef } from 'react'
+import cachedRuns from '../data/cachedRuns.json'
 
 const API_BASE = 'http://localhost:8888'
 
@@ -15,10 +16,64 @@ export default function useAlphaResearch() {
   const [currentPhase, setCurrentPhase] = useState(null)
   const eventSourceRef = useRef(null)
 
+  const reset = useCallback(() => {
+    setStatus('running')
+    setLogs([])
+    setDigData(null)
+    setExtractData(null)
+    setValidateData(null)
+    setScanData(null)
+    setActData(null)
+    setEventData(null)
+    setError(null)
+    setCurrentPhase('dig')
+  }, [])
+
+  // Replay cached data with simulated streaming delay
+  const replayCache = useCallback((cached) => {
+    reset()
+    setEventData(cached.event)
+
+    // Stream logs one by one with delay for demo effect
+    const allLogs = cached.logs || []
+    let i = 0
+    const interval = setInterval(() => {
+      if (i < allLogs.length) {
+        setLogs(prev => [...prev, allLogs[i]])
+        i++
+      } else {
+        clearInterval(interval)
+        // After logs finish, reveal each phase with small delays
+        setDigData(cached.dig)
+        setCurrentPhase('extract')
+        setTimeout(() => {
+          setExtractData(cached.extract)
+          setCurrentPhase('validate')
+        }, 300)
+        setTimeout(() => {
+          if (cached.validate) {
+            setValidateData(cached.validate)
+            setCurrentPhase('scan')
+          }
+          setStatus('completed')
+          setCurrentPhase('done')
+        }, 600)
+      }
+    }, 80)
+
+    return () => clearInterval(interval)
+  }, [reset])
+
   const start = useCallback(async (query) => {
     // Extract token: uppercase ticker, or first capitalized/all-caps word, or first word
     const tokenMatch = query.match(/\b([A-Z]{2,10})\b/) || query.match(/\b([A-Za-z]{2,10})\b/)
     const token = tokenMatch ? tokenMatch[1].toUpperCase() : query.trim().split(/\s+/)[0].toUpperCase()
+
+    // Check cache first — instant demo for known tokens
+    if (cachedRuns[token]) {
+      replayCache(cachedRuns[token])
+      return
+    }
 
     // Extract date: "March 2025", "Oct 2024", "2026-02", etc.
     const dateMatch = query.match(/((?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\w*\s+\d{4})/i)
@@ -41,17 +96,7 @@ export default function useAlphaResearch() {
       }
     }
 
-    // Reset state
-    setStatus('running')
-    setLogs([])
-    setDigData(null)
-    setExtractData(null)
-    setValidateData(null)
-    setScanData(null)
-    setActData(null)
-    setEventData(null)
-    setError(null)
-    setCurrentPhase('dig')
+    reset()
 
     try {
       const res = await fetch(`${API_BASE}/api/run`, {
@@ -107,7 +152,6 @@ export default function useAlphaResearch() {
       })
 
       es.addEventListener('error', (e) => {
-        // SSE error event — could be connection or pipeline error
         try {
           const data = JSON.parse(e.data)
           setError(data.message)
@@ -119,7 +163,6 @@ export default function useAlphaResearch() {
       })
 
       es.onerror = () => {
-        // EventSource connection error — only if not already done
         if (es.readyState === EventSource.CLOSED) return
         setError('SSE connection failed')
         setStatus('error')
@@ -129,7 +172,7 @@ export default function useAlphaResearch() {
       setError(err.message)
       setStatus('error')
     }
-  }, [])
+  }, [reset, replayCache])
 
   const stop = useCallback(() => {
     if (eventSourceRef.current) {

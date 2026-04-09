@@ -1,0 +1,1909 @@
+{
+  "MORPHO": {
+    "event": {
+      "token": "MORPHO",
+      "change_pct": 81.54048170636815,
+      "event_start": "2026-02-13",
+      "event_peak": "2026-03-11",
+      "lookback_start": "2026-01-30",
+      "lookback_end": "2026-02-13",
+      "chain": "ethereum",
+      "project_id": ""
+    },
+    "logs": [
+      {
+        "time": "",
+        "agent": "System",
+        "agentType": "system",
+        "icon": "⏳",
+        "message": "Starting pipeline...",
+        "isHighlight": false
+      },
+      {
+        "time": "",
+        "agent": "Event Confirmer",
+        "agentType": "system",
+        "icon": "📊",
+        "message": "Confirmed: MORPHO +82% (2026-02-13 → 2026-03-11)",
+        "isHighlight": true
+      },
+      {
+        "time": "26-02-04",
+        "agent": "On-Chain Agent",
+        "agentType": "onchain",
+        "icon": "🐋",
+        "message": "$21,289,974 in transfers (3.0x daily avg)",
+        "isHighlight": false
+      },
+      {
+        "time": "70336000",
+        "agent": "System",
+        "agentType": "system",
+        "icon": "🔍",
+        "message": "Funding rate flipped from -0.000042 to 0.000010",
+        "isHighlight": true
+      },
+      {
+        "time": "70422400",
+        "agent": "System",
+        "agentType": "system",
+        "icon": "🔍",
+        "message": "Funding rate flipped from -0.000069 to 0.000010",
+        "isHighlight": true
+      },
+      {
+        "time": "70451200",
+        "agent": "System",
+        "agentType": "system",
+        "icon": "🔍",
+        "message": "Funding rate flipped from -0.000065 to 0.000007",
+        "isHighlight": true
+      },
+      {
+        "time": "70868800",
+        "agent": "System",
+        "agentType": "system",
+        "icon": "🔍",
+        "message": "Funding rate flipped from -0.000009 to 0.000042",
+        "isHighlight": true
+      },
+      {
+        "time": "70926400",
+        "agent": "System",
+        "agentType": "system",
+        "icon": "🔍",
+        "message": "Funding rate flipped from -0.000012 to 0.000006",
+        "isHighlight": true
+      },
+      {
+        "time": "69817600",
+        "agent": "System",
+        "agentType": "system",
+        "icon": "🔍",
+        "message": "Funding rate flipped from -0.000030 to 0.000002",
+        "isHighlight": true
+      },
+      {
+        "time": "69976000",
+        "agent": "System",
+        "agentType": "system",
+        "icon": "🔍",
+        "message": "Funding rate flipped from -0.000323 to 0.000004",
+        "isHighlight": true
+      },
+      {
+        "time": "70019200",
+        "agent": "System",
+        "agentType": "system",
+        "icon": "🔍",
+        "message": "Funding rate flipped from -0.000042 to 0.000007",
+        "isHighlight": true
+      },
+      {
+        "time": "70048000",
+        "agent": "System",
+        "agentType": "system",
+        "icon": "🔍",
+        "message": "Funding rate flipped from -0.000053 to 0.000046",
+        "isHighlight": true
+      },
+      {
+        "time": "70192000",
+        "agent": "System",
+        "agentType": "system",
+        "icon": "🔍",
+        "message": "Funding rate flipped from -0.000134 to 0.000035",
+        "isHighlight": true
+      },
+      {
+        "time": "70235200",
+        "agent": "System",
+        "agentType": "system",
+        "icon": "🔍",
+        "message": "Funding rate flipped from -0.000018 to 0.000050",
+        "isHighlight": true
+      },
+      {
+        "time": "70278400",
+        "agent": "System",
+        "agentType": "system",
+        "icon": "🔍",
+        "message": "Funding rate flipped from -0.000020 to 0.000028",
+        "isHighlight": true
+      },
+      {
+        "time": "33356800",
+        "agent": "System",
+        "agentType": "system",
+        "icon": "🔍",
+        "message": "$2,503,069 in liquidations (short: $1,594,122, long: $908,947)",
+        "isHighlight": true
+      },
+      {
+        "time": "70984000",
+        "agent": "System",
+        "agentType": "system",
+        "icon": "🔍",
+        "message": "Funding rate flipped from -0.000024 to 0.000050",
+        "isHighlight": true
+      },
+      {
+        "time": "26-02-04",
+        "agent": "On-Chain Agent",
+        "agentType": "onchain",
+        "icon": "🐋",
+        "message": "DEX volume $1,768,283 (2.1x baseline, ethereum)",
+        "isHighlight": false
+      },
+      {
+        "time": "26-02-13",
+        "agent": "Social Agent",
+        "agentType": "social",
+        "icon": "🐦",
+        "message": "@CryptoKaleo driving 5.2% of mindshare (23,757 smart followers)",
+        "isHighlight": true
+      },
+      {
+        "time": "26-01-30",
+        "agent": "System",
+        "agentType": "system",
+        "icon": "🔍",
+        "message": "Token unlock: ? MORPHO",
+        "isHighlight": false
+      },
+      {
+        "time": "26-01-31",
+        "agent": "System",
+        "agentType": "system",
+        "icon": "🔍",
+        "message": "Token unlock: ? MORPHO",
+        "isHighlight": false
+      },
+      {
+        "time": "26-02-01",
+        "agent": "System",
+        "agentType": "system",
+        "icon": "🔍",
+        "message": "Token unlock: ? MORPHO",
+        "isHighlight": false
+      },
+      {
+        "time": "26-02-14",
+        "agent": "On-Chain Agent",
+        "agentType": "onchain",
+        "icon": "🐋",
+        "message": "DEX volume $3,410,085 (4.0x baseline, ethereum)",
+        "isHighlight": false
+      },
+      {
+        "time": "26-02-25",
+        "agent": "On-Chain Agent",
+        "agentType": "onchain",
+        "icon": "🐋",
+        "message": "DEX volume $1,691,882 (2.0x baseline, ethereum)",
+        "isHighlight": false
+      },
+      {
+        "time": "26-04-03",
+        "agent": "System",
+        "agentType": "system",
+        "icon": "🔍",
+        "message": "USD1's Institutional DeFi Bet Hasn't Proven Itself Yet",
+        "isHighlight": false
+      },
+      {
+        "time": "26-03-23",
+        "agent": "System",
+        "agentType": "system",
+        "icon": "🔍",
+        "message": "Automation Failures, Not Curators, Caused Resolv's Bad Debt",
+        "isHighlight": false
+      },
+      {
+        "time": "26-03-22",
+        "agent": "System",
+        "agentType": "system",
+        "icon": "🔍",
+        "message": "USR Exploit Tests Morpho's Isolation Design",
+        "isHighlight": false
+      },
+      {
+        "time": "26-03-14",
+        "agent": "System",
+        "agentType": "system",
+        "icon": "🔍",
+        "message": "GRVT Delays Token Launch to June 2026, Pivots Toward Compliance-First Strategy",
+        "isHighlight": false
+      },
+      {
+        "time": "26-03-13",
+        "agent": "System",
+        "agentType": "system",
+        "icon": "🔍",
+        "message": "Aave swap fiasco traced to user error, not money laundering",
+        "isHighlight": false
+      },
+      {
+        "time": "26-03-12",
+        "agent": "System",
+        "agentType": "system",
+        "icon": "🔍",
+        "message": "MORPHO Breaks Out on Back-to-Back Integrations and Viral MEV Trade",
+        "isHighlight": false
+      },
+      {
+        "time": "26-02-20",
+        "agent": "System",
+        "agentType": "system",
+        "icon": "🔍",
+        "message": "Institutions Are Buying While Retail Stays Bearish",
+        "isHighlight": false
+      },
+      {
+        "time": "26-02-19",
+        "agent": "System",
+        "agentType": "system",
+        "icon": "🔍",
+        "message": "Regulatory Clarity Is Setting Up the Next Phase of Crypto Infrastructure",
+        "isHighlight": false
+      },
+      {
+        "time": "26-02-14",
+        "agent": "System",
+        "agentType": "system",
+        "icon": "🔍",
+        "message": "Apollo's Morpho Stake Is About Control, Not Speculation",
+        "isHighlight": false
+      },
+      {
+        "time": "26-02-13",
+        "agent": "System",
+        "agentType": "system",
+        "icon": "🔍",
+        "message": "Infrastructure Is Driving Crypto Adoption, Not Social Buzz",
+        "isHighlight": false
+      },
+      {
+        "time": "26-03-04",
+        "agent": "System",
+        "agentType": "system",
+        "icon": "🔍",
+        "message": "[CHAINCATCHER] Data: 1.204 million MORPHO transferred from Ethena to Anchorage Digital Custody, valued at approximately 2.31 million USD",
+        "isHighlight": false
+      },
+      {
+        "time": "26-03-02",
+        "agent": "System",
+        "agentType": "system",
+        "icon": "🔍",
+        "message": "[TRADINGVIEW] Bitcoin And Ethereum Dip, But These Five Altcoins Bucked The Trend",
+        "isHighlight": false
+      },
+      {
+        "time": "26-03-01",
+        "agent": "System",
+        "agentType": "system",
+        "icon": "🔍",
+        "message": "[CHAINCATCHER] The Aave civil war escalates, Morpho quietly doubles: Is the lending throne about to change hands?",
+        "isHighlight": false
+      },
+      {
+        "time": "26-02-26",
+        "agent": "System",
+        "agentType": "system",
+        "icon": "🔍",
+        "message": "[AMBCRYPTO] MORPHO surges 11% as buyers take control: Can $1.80 unlock a bigger breakout?",
+        "isHighlight": false
+      },
+      {
+        "time": "26-02-25",
+        "agent": "System",
+        "agentType": "system",
+        "icon": "🔍",
+        "message": "[TRADINGVIEW] Kraken introduces fixed-rate crypto loans for its Pro users",
+        "isHighlight": false
+      },
+      {
+        "time": "",
+        "agent": "System",
+        "agentType": "system",
+        "icon": "✅",
+        "message": "Research complete. 37 signals found.",
+        "isHighlight": true
+      }
+    ],
+    "dig": {
+      "total_signals": 37,
+      "strong_signals": 15,
+      "signals": [
+        {
+          "timestamp": "2026-02-04",
+          "category": "onchain",
+          "signal_type": "LARGE_TRANSFER_SPIKE",
+          "description": "$21,289,974 in transfers (3.0x daily avg)",
+          "strength": "extreme",
+          "relevance_score": 0.8300000000000001,
+          "lead_time_hours": 216.0,
+          "evidence_url": null
+        },
+        {
+          "timestamp": "1770336000",
+          "category": "market_structure",
+          "signal_type": "FUNDING_FLIP_POSITIVE",
+          "description": "Funding rate flipped from -0.000042 to 0.000010",
+          "strength": "strong",
+          "relevance_score": 0.8099999999999999,
+          "lead_time_hours": 168.0,
+          "evidence_url": null
+        },
+        {
+          "timestamp": "1770422400",
+          "category": "market_structure",
+          "signal_type": "FUNDING_FLIP_POSITIVE",
+          "description": "Funding rate flipped from -0.000069 to 0.000010",
+          "strength": "strong",
+          "relevance_score": 0.8099999999999999,
+          "lead_time_hours": 144.0,
+          "evidence_url": null
+        },
+        {
+          "timestamp": "1770451200",
+          "category": "market_structure",
+          "signal_type": "FUNDING_FLIP_POSITIVE",
+          "description": "Funding rate flipped from -0.000065 to 0.000007",
+          "strength": "strong",
+          "relevance_score": 0.8099999999999999,
+          "lead_time_hours": 136.0,
+          "evidence_url": null
+        },
+        {
+          "timestamp": "1770868800",
+          "category": "market_structure",
+          "signal_type": "FUNDING_FLIP_POSITIVE",
+          "description": "Funding rate flipped from -0.000009 to 0.000042",
+          "strength": "strong",
+          "relevance_score": 0.7799999999999999,
+          "lead_time_hours": 20.0,
+          "evidence_url": null
+        },
+        {
+          "timestamp": "1770926400",
+          "category": "market_structure",
+          "signal_type": "FUNDING_FLIP_POSITIVE",
+          "description": "Funding rate flipped from -0.000012 to 0.000006",
+          "strength": "strong",
+          "relevance_score": 0.7799999999999999,
+          "lead_time_hours": 4.0,
+          "evidence_url": null
+        },
+        {
+          "timestamp": "1769817600",
+          "category": "market_structure",
+          "signal_type": "FUNDING_FLIP_POSITIVE",
+          "description": "Funding rate flipped from -0.000030 to 0.000002",
+          "strength": "strong",
+          "relevance_score": 0.72,
+          "lead_time_hours": 312.0,
+          "evidence_url": null
+        },
+        {
+          "timestamp": "1769976000",
+          "category": "market_structure",
+          "signal_type": "FUNDING_FLIP_POSITIVE",
+          "description": "Funding rate flipped from -0.000323 to 0.000004",
+          "strength": "strong",
+          "relevance_score": 0.72,
+          "lead_time_hours": 268.0,
+          "evidence_url": null
+        },
+        {
+          "timestamp": "1770019200",
+          "category": "market_structure",
+          "signal_type": "FUNDING_FLIP_POSITIVE",
+          "description": "Funding rate flipped from -0.000042 to 0.000007",
+          "strength": "strong",
+          "relevance_score": 0.72,
+          "lead_time_hours": 256.0,
+          "evidence_url": null
+        },
+        {
+          "timestamp": "1770048000",
+          "category": "market_structure",
+          "signal_type": "FUNDING_FLIP_POSITIVE",
+          "description": "Funding rate flipped from -0.000053 to 0.000046",
+          "strength": "strong",
+          "relevance_score": 0.72,
+          "lead_time_hours": 248.0,
+          "evidence_url": null
+        },
+        {
+          "timestamp": "1770192000",
+          "category": "market_structure",
+          "signal_type": "FUNDING_FLIP_POSITIVE",
+          "description": "Funding rate flipped from -0.000134 to 0.000035",
+          "strength": "strong",
+          "relevance_score": 0.72,
+          "lead_time_hours": 208.0,
+          "evidence_url": null
+        },
+        {
+          "timestamp": "1770235200",
+          "category": "market_structure",
+          "signal_type": "FUNDING_FLIP_POSITIVE",
+          "description": "Funding rate flipped from -0.000018 to 0.000050",
+          "strength": "strong",
+          "relevance_score": 0.72,
+          "lead_time_hours": 196.0,
+          "evidence_url": null
+        },
+        {
+          "timestamp": "1770278400",
+          "category": "market_structure",
+          "signal_type": "FUNDING_FLIP_POSITIVE",
+          "description": "Funding rate flipped from -0.000020 to 0.000028",
+          "strength": "strong",
+          "relevance_score": 0.72,
+          "lead_time_hours": 184.0,
+          "evidence_url": null
+        },
+        {
+          "timestamp": "1733356800",
+          "category": "market_structure",
+          "signal_type": "LARGE_LIQUIDATION",
+          "description": "$2,503,069 in liquidations (short: $1,594,122, long: $908,947)",
+          "strength": "strong",
+          "relevance_score": 0.67,
+          "lead_time_hours": 10440.0,
+          "evidence_url": null
+        },
+        {
+          "timestamp": "1770984000",
+          "category": "market_structure",
+          "signal_type": "FUNDING_FLIP_POSITIVE",
+          "description": "Funding rate flipped from -0.000024 to 0.000050",
+          "strength": "strong",
+          "relevance_score": 0.6,
+          "lead_time_hours": 0,
+          "evidence_url": null
+        },
+        {
+          "timestamp": "2026-02-04",
+          "category": "onchain",
+          "signal_type": "DEX_VOLUME_ELEVATED",
+          "description": "DEX volume $1,768,283 (2.1x baseline, ethereum)",
+          "strength": "moderate",
+          "relevance_score": 0.5900000000000001,
+          "lead_time_hours": 216.0,
+          "evidence_url": null
+        },
+        {
+          "timestamp": "2026-02-13",
+          "category": "social",
+          "signal_type": "HIGH_INFLUENCE_KOL",
+          "description": "@CryptoKaleo driving 5.2% of mindshare (23,757 smart followers)",
+          "strength": "strong",
+          "relevance_score": 0.56,
+          "lead_time_hours": 0,
+          "evidence_url": null
+        },
+        {
+          "timestamp": "2026-01-30",
+          "category": "news",
+          "signal_type": "TOKEN_UNLOCK",
+          "description": "Token unlock: ? MORPHO",
+          "strength": "moderate",
+          "relevance_score": 0.49,
+          "lead_time_hours": 336.0,
+          "evidence_url": null
+        },
+        {
+          "timestamp": "2026-01-31",
+          "category": "news",
+          "signal_type": "TOKEN_UNLOCK",
+          "description": "Token unlock: ? MORPHO",
+          "strength": "moderate",
+          "relevance_score": 0.49,
+          "lead_time_hours": 312.0,
+          "evidence_url": null
+        },
+        {
+          "timestamp": "2026-02-01",
+          "category": "news",
+          "signal_type": "TOKEN_UNLOCK",
+          "description": "Token unlock: ? MORPHO",
+          "strength": "moderate",
+          "relevance_score": 0.49,
+          "lead_time_hours": 288.0,
+          "evidence_url": null
+        },
+        {
+          "timestamp": "2026-02-14",
+          "category": "onchain",
+          "signal_type": "DEX_VOLUME_ELEVATED",
+          "description": "DEX volume $3,410,085 (4.0x baseline, ethereum)",
+          "strength": "moderate",
+          "relevance_score": 0.47000000000000003,
+          "lead_time_hours": 0,
+          "evidence_url": null
+        },
+        {
+          "timestamp": "2026-02-25",
+          "category": "onchain",
+          "signal_type": "DEX_VOLUME_ELEVATED",
+          "description": "DEX volume $1,691,882 (2.0x baseline, ethereum)",
+          "strength": "moderate",
+          "relevance_score": 0.47000000000000003,
+          "lead_time_hours": 0,
+          "evidence_url": null
+        },
+        {
+          "timestamp": "2026-04-03",
+          "category": "news",
+          "signal_type": "TWITTER_SIGNAL",
+          "description": "USD1's Institutional DeFi Bet Hasn't Proven Itself Yet",
+          "strength": "moderate",
+          "relevance_score": 0.37,
+          "lead_time_hours": 0,
+          "evidence_url": null
+        },
+        {
+          "timestamp": "2026-03-23",
+          "category": "news",
+          "signal_type": "TWITTER_SIGNAL",
+          "description": "Automation Failures, Not Curators, Caused Resolv's Bad Debt",
+          "strength": "moderate",
+          "relevance_score": 0.37,
+          "lead_time_hours": 0,
+          "evidence_url": null
+        },
+        {
+          "timestamp": "2026-03-22",
+          "category": "news",
+          "signal_type": "MINDSHARE_NEWS",
+          "description": "USR Exploit Tests Morpho's Isolation Design",
+          "strength": "moderate",
+          "relevance_score": 0.37,
+          "lead_time_hours": 0,
+          "evidence_url": null
+        },
+        {
+          "timestamp": "2026-03-14",
+          "category": "news",
+          "signal_type": "TWITTER_SIGNAL",
+          "description": "GRVT Delays Token Launch to June 2026, Pivots Toward Compliance-First Strategy",
+          "strength": "moderate",
+          "relevance_score": 0.37,
+          "lead_time_hours": 0,
+          "evidence_url": null
+        },
+        {
+          "timestamp": "2026-03-13",
+          "category": "news",
+          "signal_type": "TWITTER_SIGNAL",
+          "description": "Aave swap fiasco traced to user error, not money laundering",
+          "strength": "moderate",
+          "relevance_score": 0.37,
+          "lead_time_hours": 0,
+          "evidence_url": null
+        },
+        {
+          "timestamp": "2026-03-12",
+          "category": "news",
+          "signal_type": "MINDSHARE_NEWS",
+          "description": "MORPHO Breaks Out on Back-to-Back Integrations and Viral MEV Trade",
+          "strength": "moderate",
+          "relevance_score": 0.37,
+          "lead_time_hours": 0,
+          "evidence_url": null
+        },
+        {
+          "timestamp": "2026-02-20",
+          "category": "news",
+          "signal_type": "TWITTER_SIGNAL",
+          "description": "Institutions Are Buying While Retail Stays Bearish",
+          "strength": "moderate",
+          "relevance_score": 0.37,
+          "lead_time_hours": 0,
+          "evidence_url": null
+        },
+        {
+          "timestamp": "2026-02-19",
+          "category": "news",
+          "signal_type": "TWITTER_SIGNAL",
+          "description": "Regulatory Clarity Is Setting Up the Next Phase of Crypto Infrastructure",
+          "strength": "moderate",
+          "relevance_score": 0.37,
+          "lead_time_hours": 0,
+          "evidence_url": null
+        },
+        {
+          "timestamp": "2026-02-14",
+          "category": "news",
+          "signal_type": "TWITTER_SIGNAL",
+          "description": "Apollo's Morpho Stake Is About Control, Not Speculation",
+          "strength": "moderate",
+          "relevance_score": 0.37,
+          "lead_time_hours": 0,
+          "evidence_url": null
+        },
+        {
+          "timestamp": "2026-02-13",
+          "category": "news",
+          "signal_type": "TWITTER_SIGNAL",
+          "description": "Infrastructure Is Driving Crypto Adoption, Not Social Buzz",
+          "strength": "moderate",
+          "relevance_score": 0.37,
+          "lead_time_hours": 0,
+          "evidence_url": null
+        },
+        {
+          "timestamp": "2026-03-04",
+          "category": "news",
+          "signal_type": "NEWS_EVENT",
+          "description": "[CHAINCATCHER] Data: 1.204 million MORPHO transferred from Ethena to Anchorage Digital Custody, valued at approximately 2.31 million USD",
+          "strength": "moderate",
+          "relevance_score": 0.37,
+          "lead_time_hours": 0,
+          "evidence_url": "https://www.chaincatcher.com/en/article/2249504"
+        },
+        {
+          "timestamp": "2026-03-02",
+          "category": "news",
+          "signal_type": "NEWS_EVENT",
+          "description": "[TRADINGVIEW] Bitcoin And Ethereum Dip, But These Five Altcoins Bucked The Trend",
+          "strength": "moderate",
+          "relevance_score": 0.37,
+          "lead_time_hours": 0,
+          "evidence_url": "https://www.tradingview.com/news/stocktwits:672e1a58f094b:0/"
+        },
+        {
+          "timestamp": "2026-03-01",
+          "category": "news",
+          "signal_type": "NEWS_EVENT",
+          "description": "[CHAINCATCHER] The Aave civil war escalates, Morpho quietly doubles: Is the lending throne about to change hands?",
+          "strength": "moderate",
+          "relevance_score": 0.37,
+          "lead_time_hours": 0,
+          "evidence_url": "https://www.chaincatcher.com/en/article/2248634"
+        },
+        {
+          "timestamp": "2026-02-26",
+          "category": "news",
+          "signal_type": "NEWS_EVENT",
+          "description": "[AMBCRYPTO] MORPHO surges 11% as buyers take control: Can $1.80 unlock a bigger breakout?",
+          "strength": "moderate",
+          "relevance_score": 0.37,
+          "lead_time_hours": 0,
+          "evidence_url": "https://ambcrypto.com/morpho-surges-11-as-buyers-take-control-can-1-80-unlock-a-bigger-breakout/"
+        },
+        {
+          "timestamp": "2026-02-25",
+          "category": "news",
+          "signal_type": "NEWS_EVENT",
+          "description": "[TRADINGVIEW] Kraken introduces fixed-rate crypto loans for its Pro users",
+          "strength": "moderate",
+          "relevance_score": 0.37,
+          "lead_time_hours": 0,
+          "evidence_url": "https://www.tradingview.com/news/cointelegraph:1fded74b3094b:0-kraken-introduces-fixed-rate-crypto-loans-for-its-pro-users/"
+        }
+      ]
+    },
+    "extract": {
+      "pattern_id": "P-130e4209",
+      "name": "Funding Flip + Whale Accumulation + Tokenomics Event",
+      "time_window_days": 14,
+      "min_signals_required": 1,
+      "conditions": [
+        {
+          "signal_type": "funding_flip",
+          "category": "market_structure",
+          "day_range": [
+            -13,
+            0
+          ],
+          "required": true,
+          "description": "13 signals, strength=3.0, days [-13 to +0]"
+        },
+        {
+          "signal_type": "whale_accumulation",
+          "category": "onchain",
+          "day_range": [
+            -9,
+            -9
+          ],
+          "required": false,
+          "description": "1 signals, strength=4.0, days [-9 to -9]"
+        },
+        {
+          "signal_type": "tokenomics_event",
+          "category": "news",
+          "day_range": [
+            -14,
+            -12
+          ],
+          "required": false,
+          "description": "3 signals, strength=2.0, days [-14 to -12]"
+        },
+        {
+          "signal_type": "dex_volume_surge",
+          "category": "onchain",
+          "day_range": [
+            -9,
+            -9
+          ],
+          "required": false,
+          "description": "1 signals, strength=2.0, days [-9 to -9]"
+        },
+        {
+          "signal_type": "kol_first_mention",
+          "category": "social",
+          "day_range": [
+            0,
+            0
+          ],
+          "required": false,
+          "description": "1 signals, strength=3.0, days [+0 to +0]"
+        },
+        {
+          "signal_type": "twitter_signal",
+          "category": "news",
+          "day_range": [
+            0,
+            0
+          ],
+          "required": false,
+          "description": "1 signals, strength=2.0, days [+0 to +0]"
+        }
+      ]
+    },
+    "validate": {
+      "hit_rate": 0.3,
+      "false_positive_rate": 0.7,
+      "lift": 5.999999999999999,
+      "total_pump_events": 10,
+      "hit_count": 3,
+      "total_pattern_appearances": 10,
+      "passed": false
+    }
+  },
+  "VIRTUAL": {
+    "event": {
+      "token": "VIRTUAL",
+      "change_pct": 830.4565507084938,
+      "event_start": "2024-10-02",
+      "event_peak": "2024-10-27",
+      "lookback_start": "2024-09-18",
+      "lookback_end": "2024-10-02",
+      "chain": "ethereum",
+      "project_id": ""
+    },
+    "logs": [
+      {
+        "time": "",
+        "agent": "System",
+        "agentType": "system",
+        "icon": "⏳",
+        "message": "Starting pipeline...",
+        "isHighlight": false
+      },
+      {
+        "time": "",
+        "agent": "Event Confirmer",
+        "agentType": "system",
+        "icon": "📊",
+        "message": "Confirmed: VIRTUAL +830% (2024-10-02 → 2024-10-27)",
+        "isHighlight": true
+      },
+      {
+        "time": "24-09-30",
+        "agent": "On-Chain Agent",
+        "agentType": "onchain",
+        "icon": "🐋",
+        "message": "$1,295,797 in large transfers (3.9x daily average)",
+        "isHighlight": false
+      },
+      {
+        "time": "24-10-16",
+        "agent": "On-Chain Agent",
+        "agentType": "onchain",
+        "icon": "🐋",
+        "message": "DEX volume $14,320,762 (26x baseline)",
+        "isHighlight": false
+      },
+      {
+        "time": "24-10-17",
+        "agent": "On-Chain Agent",
+        "agentType": "onchain",
+        "icon": "🐋",
+        "message": "DEX volume $4,195,149 (8x baseline)",
+        "isHighlight": false
+      },
+      {
+        "time": "24-10-19",
+        "agent": "On-Chain Agent",
+        "agentType": "onchain",
+        "icon": "🐋",
+        "message": "DEX volume $6,617,165 (12x baseline)",
+        "isHighlight": false
+      },
+      {
+        "time": "24-10-20",
+        "agent": "On-Chain Agent",
+        "agentType": "onchain",
+        "icon": "🐋",
+        "message": "DEX volume $3,806,834 (7x baseline)",
+        "isHighlight": false
+      },
+      {
+        "time": "24-10-21",
+        "agent": "On-Chain Agent",
+        "agentType": "onchain",
+        "icon": "🐋",
+        "message": "DEX volume $15,181,074 (28x baseline)",
+        "isHighlight": false
+      },
+      {
+        "time": "24-10-22",
+        "agent": "On-Chain Agent",
+        "agentType": "onchain",
+        "icon": "🐋",
+        "message": "DEX volume $24,614,843 (45x baseline)",
+        "isHighlight": false
+      },
+      {
+        "time": "24-10-23",
+        "agent": "On-Chain Agent",
+        "agentType": "onchain",
+        "icon": "🐋",
+        "message": "DEX volume $14,901,751 (27x baseline)",
+        "isHighlight": false
+      },
+      {
+        "time": "24-10-24",
+        "agent": "On-Chain Agent",
+        "agentType": "onchain",
+        "icon": "🐋",
+        "message": "DEX volume $15,389,974 (28x baseline)",
+        "isHighlight": false
+      },
+      {
+        "time": "24-10-25",
+        "agent": "On-Chain Agent",
+        "agentType": "onchain",
+        "icon": "🐋",
+        "message": "DEX volume $61,161,766 (112x baseline)",
+        "isHighlight": false
+      },
+      {
+        "time": "24-10-26",
+        "agent": "On-Chain Agent",
+        "agentType": "onchain",
+        "icon": "🐋",
+        "message": "DEX volume $72,664,064 (134x baseline)",
+        "isHighlight": false
+      },
+      {
+        "time": "24-10-27",
+        "agent": "On-Chain Agent",
+        "agentType": "onchain",
+        "icon": "🐋",
+        "message": "DEX volume $51,254,157 (94x baseline)",
+        "isHighlight": false
+      },
+      {
+        "time": "34638400",
+        "agent": "System",
+        "agentType": "system",
+        "icon": "🔍",
+        "message": "Funding rate flipped from -0.000164 to 0.000050",
+        "isHighlight": true
+      },
+      {
+        "time": "34782400",
+        "agent": "System",
+        "agentType": "system",
+        "icon": "🔍",
+        "message": "Funding rate flipped from -0.000222 to 0.000050",
+        "isHighlight": true
+      },
+      {
+        "time": "34912000",
+        "agent": "System",
+        "agentType": "system",
+        "icon": "🔍",
+        "message": "Funding rate flipped from -0.000517 to 0.000035",
+        "isHighlight": true
+      },
+      {
+        "time": "24-10-02",
+        "agent": "Social Agent",
+        "agentType": "social",
+        "icon": "🐦",
+        "message": "@virtuals_io driving 23.9% of mindshare (20,195 smart followers)",
+        "isHighlight": true
+      },
+      {
+        "time": "35776000",
+        "agent": "System",
+        "agentType": "system",
+        "icon": "🔍",
+        "message": "$2,042,985 in liquidations (short: $1,284,943, long: $758,042)",
+        "isHighlight": true
+      },
+      {
+        "time": "36726400",
+        "agent": "System",
+        "agentType": "system",
+        "icon": "🔍",
+        "message": "$2,177,695 in liquidations (short: $816,289, long: $1,361,405)",
+        "isHighlight": true
+      },
+      {
+        "time": "38454400",
+        "agent": "System",
+        "agentType": "system",
+        "icon": "🔍",
+        "message": "$2,169,371 in liquidations (short: $47,412, long: $2,121,959)",
+        "isHighlight": true
+      },
+      {
+        "time": "45884800",
+        "agent": "System",
+        "agentType": "system",
+        "icon": "🔍",
+        "message": "$2,017,924 in liquidations (short: $1,183,832, long: $834,092)",
+        "isHighlight": true
+      },
+      {
+        "time": "46057600",
+        "agent": "System",
+        "agentType": "system",
+        "icon": "🔍",
+        "message": "$2,149,674 in liquidations (short: $1,245,522, long: $904,152)",
+        "isHighlight": true
+      },
+      {
+        "time": "46662400",
+        "agent": "System",
+        "agentType": "system",
+        "icon": "🔍",
+        "message": "$3,733,806 in liquidations (short: $2,793,462, long: $940,344)",
+        "isHighlight": true
+      },
+      {
+        "time": "60054400",
+        "agent": "System",
+        "agentType": "system",
+        "icon": "🔍",
+        "message": "$2,755,654 in liquidations (short: $579,633, long: $2,176,020)",
+        "isHighlight": true
+      },
+      {
+        "time": "62128000",
+        "agent": "System",
+        "agentType": "system",
+        "icon": "🔍",
+        "message": "$3,537,038 in liquidations (short: $292,196, long: $3,244,842)",
+        "isHighlight": true
+      },
+      {
+        "time": "26617600",
+        "agent": "System",
+        "agentType": "system",
+        "icon": "🔍",
+        "message": "Token unlock: ? VIRTUAL",
+        "isHighlight": false
+      },
+      {
+        "time": "24-10-15",
+        "agent": "On-Chain Agent",
+        "agentType": "onchain",
+        "icon": "🐋",
+        "message": "DEX volume $1,154,832 (2.1x baseline)",
+        "isHighlight": false
+      },
+      {
+        "time": "24-10-18",
+        "agent": "On-Chain Agent",
+        "agentType": "onchain",
+        "icon": "🐋",
+        "message": "DEX volume $2,186,074 (4.0x baseline)",
+        "isHighlight": false
+      },
+      {
+        "time": "24-10-02",
+        "agent": "Social Agent",
+        "agentType": "social",
+        "icon": "🐦",
+        "message": "X sentiment score: 0.73 (strongly bullish)",
+        "isHighlight": false
+      },
+      {
+        "time": "34379200",
+        "agent": "System",
+        "agentType": "system",
+        "icon": "🔍",
+        "message": "Funding rate 0.1081% (positive)",
+        "isHighlight": false
+      },
+      {
+        "time": "74472543",
+        "agent": "System",
+        "agentType": "system",
+        "icon": "🔍",
+        "message": "AI Agents Go Multi-Chain, and DeFi Traders Are Paying Attention",
+        "isHighlight": false
+      },
+      {
+        "time": "73730964",
+        "agent": "System",
+        "agentType": "system",
+        "icon": "🔍",
+        "message": "Virtuals is making real money on Base: $3M in agent revenue and why traders are paying attention",
+        "isHighlight": false
+      },
+      {
+        "time": "73122530",
+        "agent": "System",
+        "agentType": "system",
+        "icon": "🔍",
+        "message": "ERC-8183 Kicks Off a Virtuals-Led Agent Economy Rally",
+        "isHighlight": false
+      },
+      {
+        "time": "29987200",
+        "agent": "System",
+        "agentType": "system",
+        "icon": "🔍",
+        "message": "Token unlock: ? VIRTUAL",
+        "isHighlight": false
+      },
+      {
+        "time": "",
+        "agent": "System",
+        "agentType": "system",
+        "icon": "✅",
+        "message": "Research complete. 33 signals found.",
+        "isHighlight": true
+      }
+    ],
+    "dig": {
+      "total_signals": 33,
+      "strong_signals": 12,
+      "signals": [
+        {
+          "timestamp": "2024-09-30",
+          "category": "onchain",
+          "signal_type": "LARGE_TRANSFER_SPIKE",
+          "description": "$1,295,797 in large transfers (3.9x daily average)",
+          "strength": "extreme",
+          "relevance_score": 0.9500000000000002,
+          "lead_time_hours": 48.0,
+          "evidence_url": null
+        },
+        {
+          "timestamp": "2024-10-16",
+          "category": "onchain",
+          "signal_type": "DEX_VOLUME_EXPLOSION",
+          "description": "DEX volume $14,320,762 (26x baseline)",
+          "strength": "extreme",
+          "relevance_score": 0.7100000000000002,
+          "lead_time_hours": 0,
+          "evidence_url": null
+        },
+        {
+          "timestamp": "2024-10-17",
+          "category": "onchain",
+          "signal_type": "DEX_VOLUME_EXPLOSION",
+          "description": "DEX volume $4,195,149 (8x baseline)",
+          "strength": "extreme",
+          "relevance_score": 0.7100000000000002,
+          "lead_time_hours": 0,
+          "evidence_url": null
+        },
+        {
+          "timestamp": "2024-10-19",
+          "category": "onchain",
+          "signal_type": "DEX_VOLUME_EXPLOSION",
+          "description": "DEX volume $6,617,165 (12x baseline)",
+          "strength": "extreme",
+          "relevance_score": 0.7100000000000002,
+          "lead_time_hours": 0,
+          "evidence_url": null
+        },
+        {
+          "timestamp": "2024-10-20",
+          "category": "onchain",
+          "signal_type": "DEX_VOLUME_EXPLOSION",
+          "description": "DEX volume $3,806,834 (7x baseline)",
+          "strength": "extreme",
+          "relevance_score": 0.7100000000000002,
+          "lead_time_hours": 0,
+          "evidence_url": null
+        },
+        {
+          "timestamp": "2024-10-21",
+          "category": "onchain",
+          "signal_type": "DEX_VOLUME_EXPLOSION",
+          "description": "DEX volume $15,181,074 (28x baseline)",
+          "strength": "extreme",
+          "relevance_score": 0.7100000000000002,
+          "lead_time_hours": 0,
+          "evidence_url": null
+        },
+        {
+          "timestamp": "2024-10-22",
+          "category": "onchain",
+          "signal_type": "DEX_VOLUME_EXPLOSION",
+          "description": "DEX volume $24,614,843 (45x baseline)",
+          "strength": "extreme",
+          "relevance_score": 0.7100000000000002,
+          "lead_time_hours": 0,
+          "evidence_url": null
+        },
+        {
+          "timestamp": "2024-10-23",
+          "category": "onchain",
+          "signal_type": "DEX_VOLUME_EXPLOSION",
+          "description": "DEX volume $14,901,751 (27x baseline)",
+          "strength": "extreme",
+          "relevance_score": 0.7100000000000002,
+          "lead_time_hours": 0,
+          "evidence_url": null
+        },
+        {
+          "timestamp": "2024-10-24",
+          "category": "onchain",
+          "signal_type": "DEX_VOLUME_EXPLOSION",
+          "description": "DEX volume $15,389,974 (28x baseline)",
+          "strength": "extreme",
+          "relevance_score": 0.7100000000000002,
+          "lead_time_hours": 0,
+          "evidence_url": null
+        },
+        {
+          "timestamp": "2024-10-25",
+          "category": "onchain",
+          "signal_type": "DEX_VOLUME_EXPLOSION",
+          "description": "DEX volume $61,161,766 (112x baseline)",
+          "strength": "extreme",
+          "relevance_score": 0.7100000000000002,
+          "lead_time_hours": 0,
+          "evidence_url": null
+        },
+        {
+          "timestamp": "2024-10-26",
+          "category": "onchain",
+          "signal_type": "DEX_VOLUME_EXPLOSION",
+          "description": "DEX volume $72,664,064 (134x baseline)",
+          "strength": "extreme",
+          "relevance_score": 0.7100000000000002,
+          "lead_time_hours": 0,
+          "evidence_url": null
+        },
+        {
+          "timestamp": "2024-10-27",
+          "category": "onchain",
+          "signal_type": "DEX_VOLUME_EXPLOSION",
+          "description": "DEX volume $51,254,157 (94x baseline)",
+          "strength": "extreme",
+          "relevance_score": 0.7100000000000002,
+          "lead_time_hours": 0,
+          "evidence_url": null
+        },
+        {
+          "timestamp": "1734638400",
+          "category": "market_structure",
+          "signal_type": "FUNDING_FLIP_POSITIVE",
+          "description": "Funding rate flipped from -0.000164 to 0.000050",
+          "strength": "strong",
+          "relevance_score": 0.6,
+          "lead_time_hours": 0,
+          "evidence_url": null
+        },
+        {
+          "timestamp": "1734782400",
+          "category": "market_structure",
+          "signal_type": "FUNDING_FLIP_POSITIVE",
+          "description": "Funding rate flipped from -0.000222 to 0.000050",
+          "strength": "strong",
+          "relevance_score": 0.6,
+          "lead_time_hours": 0,
+          "evidence_url": null
+        },
+        {
+          "timestamp": "1734912000",
+          "category": "market_structure",
+          "signal_type": "FUNDING_FLIP_POSITIVE",
+          "description": "Funding rate flipped from -0.000517 to 0.000035",
+          "strength": "strong",
+          "relevance_score": 0.6,
+          "lead_time_hours": 0,
+          "evidence_url": null
+        },
+        {
+          "timestamp": "2024-10-02",
+          "category": "social",
+          "signal_type": "HIGH_INFLUENCE_KOL",
+          "description": "@virtuals_io driving 23.9% of mindshare (20,195 smart followers)",
+          "strength": "strong",
+          "relevance_score": 0.56,
+          "lead_time_hours": 0,
+          "evidence_url": null
+        },
+        {
+          "timestamp": "1735776000",
+          "category": "market_structure",
+          "signal_type": "LARGE_LIQUIDATION",
+          "description": "$2,042,985 in liquidations (short: $1,284,943, long: $758,042)",
+          "strength": "strong",
+          "relevance_score": 0.55,
+          "lead_time_hours": 0,
+          "evidence_url": null
+        },
+        {
+          "timestamp": "1736726400",
+          "category": "market_structure",
+          "signal_type": "LARGE_LIQUIDATION",
+          "description": "$2,177,695 in liquidations (short: $816,289, long: $1,361,405)",
+          "strength": "strong",
+          "relevance_score": 0.55,
+          "lead_time_hours": 0,
+          "evidence_url": null
+        },
+        {
+          "timestamp": "1738454400",
+          "category": "market_structure",
+          "signal_type": "LARGE_LIQUIDATION",
+          "description": "$2,169,371 in liquidations (short: $47,412, long: $2,121,959)",
+          "strength": "strong",
+          "relevance_score": 0.55,
+          "lead_time_hours": 0,
+          "evidence_url": null
+        },
+        {
+          "timestamp": "1745884800",
+          "category": "market_structure",
+          "signal_type": "LARGE_LIQUIDATION",
+          "description": "$2,017,924 in liquidations (short: $1,183,832, long: $834,092)",
+          "strength": "strong",
+          "relevance_score": 0.55,
+          "lead_time_hours": 0,
+          "evidence_url": null
+        },
+        {
+          "timestamp": "1746057600",
+          "category": "market_structure",
+          "signal_type": "LARGE_LIQUIDATION",
+          "description": "$2,149,674 in liquidations (short: $1,245,522, long: $904,152)",
+          "strength": "strong",
+          "relevance_score": 0.55,
+          "lead_time_hours": 0,
+          "evidence_url": null
+        },
+        {
+          "timestamp": "1746662400",
+          "category": "market_structure",
+          "signal_type": "LARGE_LIQUIDATION",
+          "description": "$3,733,806 in liquidations (short: $2,793,462, long: $940,344)",
+          "strength": "strong",
+          "relevance_score": 0.55,
+          "lead_time_hours": 0,
+          "evidence_url": null
+        },
+        {
+          "timestamp": "1760054400",
+          "category": "market_structure",
+          "signal_type": "LARGE_LIQUIDATION",
+          "description": "$2,755,654 in liquidations (short: $579,633, long: $2,176,020)",
+          "strength": "strong",
+          "relevance_score": 0.55,
+          "lead_time_hours": 0,
+          "evidence_url": null
+        },
+        {
+          "timestamp": "1762128000",
+          "category": "market_structure",
+          "signal_type": "LARGE_LIQUIDATION",
+          "description": "$3,537,038 in liquidations (short: $292,196, long: $3,244,842)",
+          "strength": "strong",
+          "relevance_score": 0.55,
+          "lead_time_hours": 0,
+          "evidence_url": null
+        },
+        {
+          "timestamp": "1726617600",
+          "category": "news",
+          "signal_type": "TOKEN_UNLOCK",
+          "description": "Token unlock: ? VIRTUAL",
+          "strength": "moderate",
+          "relevance_score": 0.49,
+          "lead_time_hours": 336.0,
+          "evidence_url": null
+        },
+        {
+          "timestamp": "2024-10-15",
+          "category": "onchain",
+          "signal_type": "DEX_VOLUME_ELEVATED",
+          "description": "DEX volume $1,154,832 (2.1x baseline)",
+          "strength": "moderate",
+          "relevance_score": 0.47000000000000003,
+          "lead_time_hours": 0,
+          "evidence_url": null
+        },
+        {
+          "timestamp": "2024-10-18",
+          "category": "onchain",
+          "signal_type": "DEX_VOLUME_ELEVATED",
+          "description": "DEX volume $2,186,074 (4.0x baseline)",
+          "strength": "moderate",
+          "relevance_score": 0.47000000000000003,
+          "lead_time_hours": 0,
+          "evidence_url": null
+        },
+        {
+          "timestamp": "2024-10-02",
+          "category": "social",
+          "signal_type": "SENTIMENT_BULLISH",
+          "description": "X sentiment score: 0.73 (strongly bullish)",
+          "strength": "moderate",
+          "relevance_score": 0.44000000000000006,
+          "lead_time_hours": 0,
+          "evidence_url": null
+        },
+        {
+          "timestamp": "1734379200",
+          "category": "market_structure",
+          "signal_type": "EXTREME_FUNDING",
+          "description": "Funding rate 0.1081% (positive)",
+          "strength": "moderate",
+          "relevance_score": 0.43000000000000005,
+          "lead_time_hours": 0,
+          "evidence_url": null
+        },
+        {
+          "timestamp": "1774472543",
+          "category": "news",
+          "signal_type": "MINDSHARE_NEWS",
+          "description": "AI Agents Go Multi-Chain, and DeFi Traders Are Paying Attention",
+          "strength": "moderate",
+          "relevance_score": 0.37,
+          "lead_time_hours": 0,
+          "evidence_url": null
+        },
+        {
+          "timestamp": "1773730964",
+          "category": "news",
+          "signal_type": "MINDSHARE_NEWS",
+          "description": "Virtuals is making real money on Base: $3M in agent revenue and why traders are paying attention",
+          "strength": "moderate",
+          "relevance_score": 0.37,
+          "lead_time_hours": 0,
+          "evidence_url": null
+        },
+        {
+          "timestamp": "1773122530",
+          "category": "news",
+          "signal_type": "MINDSHARE_NEWS",
+          "description": "ERC-8183 Kicks Off a Virtuals-Led Agent Economy Rally",
+          "strength": "moderate",
+          "relevance_score": 0.37,
+          "lead_time_hours": 0,
+          "evidence_url": null
+        },
+        {
+          "timestamp": "1729987200",
+          "category": "news",
+          "signal_type": "TOKEN_UNLOCK",
+          "description": "Token unlock: ? VIRTUAL",
+          "strength": "moderate",
+          "relevance_score": 0.37,
+          "lead_time_hours": 0,
+          "evidence_url": null
+        }
+      ]
+    },
+    "extract": {
+      "pattern_id": "P-2a37ea1b",
+      "name": "Whale Accumulation + Tokenomics Event + KOL Discovery",
+      "time_window_days": 14,
+      "min_signals_required": 1,
+      "conditions": [
+        {
+          "signal_type": "whale_accumulation",
+          "category": "onchain",
+          "day_range": [
+            -2,
+            -2
+          ],
+          "required": true,
+          "description": "1 signals, strength=4.0, days [-2 to -2]"
+        },
+        {
+          "signal_type": "tokenomics_event",
+          "category": "news",
+          "day_range": [
+            -14,
+            -14
+          ],
+          "required": false,
+          "description": "1 signals, strength=2.0, days [-14 to -14]"
+        },
+        {
+          "signal_type": "kol_first_mention",
+          "category": "social",
+          "day_range": [
+            0,
+            0
+          ],
+          "required": false,
+          "description": "1 signals, strength=3.0, days [+0 to +0]"
+        },
+        {
+          "signal_type": "sentiment_shift",
+          "category": "social",
+          "day_range": [
+            0,
+            0
+          ],
+          "required": false,
+          "description": "1 signals, strength=2.0, days [+0 to +0]"
+        }
+      ]
+    },
+    "validate": {
+      "hit_rate": 0.09411764705882353,
+      "false_positive_rate": 0.9058823529411765,
+      "lift": 1.8823529411764706,
+      "total_pump_events": 85,
+      "hit_count": 8,
+      "total_pattern_appearances": 85,
+      "passed": false
+    }
+  },
+  "EDGE": {
+    "event": {
+      "token": "EDGE",
+      "change_pct": 217.49061434986504,
+      "event_start": "2026-02-24",
+      "event_peak": "2026-04-09",
+      "lookback_start": "2026-02-10",
+      "lookback_end": "2026-02-24",
+      "chain": "ethereum",
+      "project_id": ""
+    },
+    "logs": [
+      {
+        "time": "",
+        "agent": "System",
+        "agentType": "system",
+        "icon": "⏳",
+        "message": "Starting pipeline...",
+        "isHighlight": false
+      },
+      {
+        "time": "",
+        "agent": "Event Confirmer",
+        "agentType": "system",
+        "icon": "📊",
+        "message": "Confirmed: EDGE +217% (2026-02-24 → 2026-04-09)",
+        "isHighlight": true
+      },
+      {
+        "time": "26-04-01",
+        "agent": "System",
+        "agentType": "system",
+        "icon": "🔍",
+        "message": "[BITCOINWORLD] OKX EDGE Perpetual Futures Listing: Strategic Expansion Unlocks New Trading Opportunities",
+        "isHighlight": false
+      },
+      {
+        "time": "26-03-31",
+        "agent": "System",
+        "agentType": "system",
+        "icon": "🔍",
+        "message": "[CHAINCATCHER] Binance Alpha has launched EDGE",
+        "isHighlight": false
+      },
+      {
+        "time": "26-03-20",
+        "agent": "System",
+        "agentType": "system",
+        "icon": "🔍",
+        "message": "[CHAINCATCHER] Bybit will launch EDGE pre-market perpetual contracts, supporting up to 10x leverage",
+        "isHighlight": false
+      },
+      {
+        "time": "74987200",
+        "agent": "System",
+        "agentType": "system",
+        "icon": "🔍",
+        "message": "Funding rate flipped from -0.002566 to 0.000074",
+        "isHighlight": true
+      },
+      {
+        "time": "75016000",
+        "agent": "System",
+        "agentType": "system",
+        "icon": "🔍",
+        "message": "Funding rate flipped from -0.000007 to 0.000037",
+        "isHighlight": true
+      },
+      {
+        "time": "75059200",
+        "agent": "System",
+        "agentType": "system",
+        "icon": "🔍",
+        "message": "Funding rate flipped from -0.000162 to 0.000050",
+        "isHighlight": true
+      },
+      {
+        "time": "75102400",
+        "agent": "System",
+        "agentType": "system",
+        "icon": "🔍",
+        "message": "Funding rate flipped from -0.000090 to 0.000009",
+        "isHighlight": true
+      },
+      {
+        "time": "75160000",
+        "agent": "System",
+        "agentType": "system",
+        "icon": "🔍",
+        "message": "Funding rate flipped from -0.000016 to 0.000050",
+        "isHighlight": true
+      },
+      {
+        "time": "26-03-10",
+        "agent": "On-Chain Agent",
+        "agentType": "onchain",
+        "icon": "🐋",
+        "message": "DEX volume $13,443 (5x baseline, ethereum)",
+        "isHighlight": true
+      },
+      {
+        "time": "26-02-24",
+        "agent": "On-Chain Agent",
+        "agentType": "onchain",
+        "icon": "🐋",
+        "message": "DEX volume $7,612 (2.9x baseline, ethereum)",
+        "isHighlight": false
+      },
+      {
+        "time": "26-02-27",
+        "agent": "On-Chain Agent",
+        "agentType": "onchain",
+        "icon": "🐋",
+        "message": "DEX volume $10,554 (4.0x baseline, ethereum)",
+        "isHighlight": false
+      },
+      {
+        "time": "26-03-04",
+        "agent": "On-Chain Agent",
+        "agentType": "onchain",
+        "icon": "🐋",
+        "message": "DEX volume $7,359 (2.8x baseline, ethereum)",
+        "isHighlight": false
+      },
+      {
+        "time": "26-03-16",
+        "agent": "On-Chain Agent",
+        "agentType": "onchain",
+        "icon": "🐋",
+        "message": "DEX volume $10,579 (4.0x baseline, ethereum)",
+        "isHighlight": false
+      },
+      {
+        "time": "26-03-21",
+        "agent": "On-Chain Agent",
+        "agentType": "onchain",
+        "icon": "🐋",
+        "message": "DEX volume $5,775 (2.2x baseline, ethereum)",
+        "isHighlight": false
+      },
+      {
+        "time": "26-03-24",
+        "agent": "On-Chain Agent",
+        "agentType": "onchain",
+        "icon": "🐋",
+        "message": "DEX volume $6,408 (2.4x baseline, ethereum)",
+        "isHighlight": false
+      },
+      {
+        "time": "26-04-04",
+        "agent": "On-Chain Agent",
+        "agentType": "onchain",
+        "icon": "🐋",
+        "message": "DEX volume $5,516 (2.1x baseline, ethereum)",
+        "isHighlight": false
+      },
+      {
+        "time": "74972800",
+        "agent": "System",
+        "agentType": "system",
+        "icon": "🔍",
+        "message": "Funding rate -0.2566% (negative)",
+        "isHighlight": false
+      },
+      {
+        "time": "26-04-03",
+        "agent": "System",
+        "agentType": "system",
+        "icon": "🔍",
+        "message": "[BITCOINWORLD] Bitcoin World’s Dramatic 24-Hour Shift: Top 5 Gainers Surge While Losers Face Significant Declines",
+        "isHighlight": false
+      },
+      {
+        "time": "26-03-04",
+        "agent": "System",
+        "agentType": "system",
+        "icon": "🔍",
+        "message": "[BITCOINSISTEMI] South Korea’s Largest Cryptocurrency Exchange Upbit Lists a New Altcoin on its Spot Trading Platform! Here Are the Details",
+        "isHighlight": false
+      },
+      {
+        "time": "",
+        "agent": "System",
+        "agentType": "system",
+        "icon": "✅",
+        "message": "Research complete. 19 signals found.",
+        "isHighlight": true
+      }
+    ],
+    "dig": {
+      "total_signals": 19,
+      "strong_signals": 6,
+      "signals": [
+        {
+          "timestamp": "2026-04-01",
+          "category": "news",
+          "signal_type": "LISTING_NEWS",
+          "description": "[BITCOINWORLD] OKX EDGE Perpetual Futures Listing: Strategic Expansion Unlocks New Trading Opportunities",
+          "strength": "extreme",
+          "relevance_score": 0.6100000000000001,
+          "lead_time_hours": 0,
+          "evidence_url": "https://bitcoinworld.co.in/okx-edge-perpetual-futures-listing/"
+        },
+        {
+          "timestamp": "2026-03-31",
+          "category": "news",
+          "signal_type": "LISTING_NEWS",
+          "description": "[CHAINCATCHER] Binance Alpha has launched EDGE",
+          "strength": "extreme",
+          "relevance_score": 0.6100000000000001,
+          "lead_time_hours": 0,
+          "evidence_url": "https://www.chaincatcher.com/en/article/2255837"
+        },
+        {
+          "timestamp": "2026-03-20",
+          "category": "news",
+          "signal_type": "LISTING_NEWS",
+          "description": "[CHAINCATCHER] Bybit will launch EDGE pre-market perpetual contracts, supporting up to 10x leverage",
+          "strength": "extreme",
+          "relevance_score": 0.6100000000000001,
+          "lead_time_hours": 0,
+          "evidence_url": "https://www.chaincatcher.com/en/article/2253282"
+        },
+        {
+          "timestamp": "1774987200",
+          "category": "market_structure",
+          "signal_type": "FUNDING_FLIP_POSITIVE",
+          "description": "Funding rate flipped from -0.002566 to 0.000074",
+          "strength": "strong",
+          "relevance_score": 0.6,
+          "lead_time_hours": 0,
+          "evidence_url": null
+        },
+        {
+          "timestamp": "1775016000",
+          "category": "market_structure",
+          "signal_type": "FUNDING_FLIP_POSITIVE",
+          "description": "Funding rate flipped from -0.000007 to 0.000037",
+          "strength": "strong",
+          "relevance_score": 0.6,
+          "lead_time_hours": 0,
+          "evidence_url": null
+        },
+        {
+          "timestamp": "1775059200",
+          "category": "market_structure",
+          "signal_type": "FUNDING_FLIP_POSITIVE",
+          "description": "Funding rate flipped from -0.000162 to 0.000050",
+          "strength": "strong",
+          "relevance_score": 0.6,
+          "lead_time_hours": 0,
+          "evidence_url": null
+        },
+        {
+          "timestamp": "1775102400",
+          "category": "market_structure",
+          "signal_type": "FUNDING_FLIP_POSITIVE",
+          "description": "Funding rate flipped from -0.000090 to 0.000009",
+          "strength": "strong",
+          "relevance_score": 0.6,
+          "lead_time_hours": 0,
+          "evidence_url": null
+        },
+        {
+          "timestamp": "1775160000",
+          "category": "market_structure",
+          "signal_type": "FUNDING_FLIP_POSITIVE",
+          "description": "Funding rate flipped from -0.000016 to 0.000050",
+          "strength": "strong",
+          "relevance_score": 0.6,
+          "lead_time_hours": 0,
+          "evidence_url": null
+        },
+        {
+          "timestamp": "2026-03-10",
+          "category": "onchain",
+          "signal_type": "DEX_VOLUME_EXPLOSION",
+          "description": "DEX volume $13,443 (5x baseline, ethereum)",
+          "strength": "strong",
+          "relevance_score": 0.5900000000000001,
+          "lead_time_hours": 0,
+          "evidence_url": null
+        },
+        {
+          "timestamp": "2026-02-24",
+          "category": "onchain",
+          "signal_type": "DEX_VOLUME_ELEVATED",
+          "description": "DEX volume $7,612 (2.9x baseline, ethereum)",
+          "strength": "moderate",
+          "relevance_score": 0.47000000000000003,
+          "lead_time_hours": 0,
+          "evidence_url": null
+        },
+        {
+          "timestamp": "2026-02-27",
+          "category": "onchain",
+          "signal_type": "DEX_VOLUME_ELEVATED",
+          "description": "DEX volume $10,554 (4.0x baseline, ethereum)",
+          "strength": "moderate",
+          "relevance_score": 0.47000000000000003,
+          "lead_time_hours": 0,
+          "evidence_url": null
+        },
+        {
+          "timestamp": "2026-03-04",
+          "category": "onchain",
+          "signal_type": "DEX_VOLUME_ELEVATED",
+          "description": "DEX volume $7,359 (2.8x baseline, ethereum)",
+          "strength": "moderate",
+          "relevance_score": 0.47000000000000003,
+          "lead_time_hours": 0,
+          "evidence_url": null
+        },
+        {
+          "timestamp": "2026-03-16",
+          "category": "onchain",
+          "signal_type": "DEX_VOLUME_ELEVATED",
+          "description": "DEX volume $10,579 (4.0x baseline, ethereum)",
+          "strength": "moderate",
+          "relevance_score": 0.47000000000000003,
+          "lead_time_hours": 0,
+          "evidence_url": null
+        },
+        {
+          "timestamp": "2026-03-21",
+          "category": "onchain",
+          "signal_type": "DEX_VOLUME_ELEVATED",
+          "description": "DEX volume $5,775 (2.2x baseline, ethereum)",
+          "strength": "moderate",
+          "relevance_score": 0.47000000000000003,
+          "lead_time_hours": 0,
+          "evidence_url": null
+        },
+        {
+          "timestamp": "2026-03-24",
+          "category": "onchain",
+          "signal_type": "DEX_VOLUME_ELEVATED",
+          "description": "DEX volume $6,408 (2.4x baseline, ethereum)",
+          "strength": "moderate",
+          "relevance_score": 0.47000000000000003,
+          "lead_time_hours": 0,
+          "evidence_url": null
+        },
+        {
+          "timestamp": "2026-04-04",
+          "category": "onchain",
+          "signal_type": "DEX_VOLUME_ELEVATED",
+          "description": "DEX volume $5,516 (2.1x baseline, ethereum)",
+          "strength": "moderate",
+          "relevance_score": 0.47000000000000003,
+          "lead_time_hours": 0,
+          "evidence_url": null
+        },
+        {
+          "timestamp": "1774972800",
+          "category": "market_structure",
+          "signal_type": "EXTREME_FUNDING",
+          "description": "Funding rate -0.2566% (negative)",
+          "strength": "moderate",
+          "relevance_score": 0.43000000000000005,
+          "lead_time_hours": 0,
+          "evidence_url": null
+        },
+        {
+          "timestamp": "2026-04-03",
+          "category": "news",
+          "signal_type": "NEWS_EVENT",
+          "description": "[BITCOINWORLD] Bitcoin World’s Dramatic 24-Hour Shift: Top 5 Gainers Surge While Losers Face Significant Declines",
+          "strength": "moderate",
+          "relevance_score": 0.37,
+          "lead_time_hours": 0,
+          "evidence_url": "https://bitcoinworld.co.in/bitcoin-world-top-gainers-losers-analysis/"
+        },
+        {
+          "timestamp": "2026-03-04",
+          "category": "news",
+          "signal_type": "NEWS_EVENT",
+          "description": "[BITCOINSISTEMI] South Korea’s Largest Cryptocurrency Exchange Upbit Lists a New Altcoin on its Spot Trading Platform! Here Are the Details",
+          "strength": "moderate",
+          "relevance_score": 0.37,
+          "lead_time_hours": 0,
+          "evidence_url": "https://en.bitcoinsistemi.com/south-korea-s-largest-cryptocurrency-exchange-upbit-lists-a-new-altcoin-on-its-spot-trading-platform/"
+        }
+      ]
+    },
+    "extract": {
+      "pattern_id": "P-cdeb72a6",
+      "name": "Funding Flip + Catalyst + Volume Surge",
+      "time_window_days": 14,
+      "min_signals_required": 1,
+      "conditions": [
+        {
+          "signal_type": "funding_flip",
+          "category": "market_structure",
+          "day_range": [
+            35,
+            37
+          ],
+          "required": true,
+          "description": "5 signals, strength=3.0, days [+35 to +37]"
+        },
+        {
+          "signal_type": "catalyst_event",
+          "category": "news",
+          "day_range": [
+            24,
+            36
+          ],
+          "required": false,
+          "description": "3 signals, strength=4.0, days [+24 to +36]"
+        },
+        {
+          "signal_type": "dex_volume_surge",
+          "category": "onchain",
+          "day_range": [
+            0,
+            14
+          ],
+          "required": false,
+          "description": "2 signals, strength=2.5, days [+0 to +14]"
+        }
+      ]
+    },
+    "validate": null
+  }
+}
