@@ -2976,8 +2976,10 @@
           "pattern_name": "Volume Anomaly + Whale Accumulation + Tokenomics Event",
           "match_ratio": "2/4",
           "historical_win_rate": 0.5555555555555556,
-          "waiting_for": "Waiting for: volume_anomaly, tokenomics_event, kol_first_mention",
-          "source_cases": [],
+          "waiting_for": "Waiting for: volume_anomaly, tokenomics_event",
+          "source_cases": [
+            "MORPHO 2026-02 (+82%)"
+          ],
           "avg_move_pct": 89,
           "avg_lead_time_days": 8.4
         },
@@ -2987,7 +2989,9 @@
           "match_ratio": "1/4",
           "historical_win_rate": 0.5555555555555556,
           "waiting_for": "Waiting for: volume_anomaly, tokenomics_event, dex_volume_surge",
-          "source_cases": [],
+          "source_cases": [
+            "MORPHO 2026-02 (+82%)"
+          ],
           "avg_move_pct": 89,
           "avg_lead_time_days": 8.4
         },
@@ -2997,7 +3001,9 @@
           "match_ratio": "1/4",
           "historical_win_rate": 0.5555555555555556,
           "waiting_for": "Waiting for: volume_anomaly, tokenomics_event, dex_volume_surge",
-          "source_cases": [],
+          "source_cases": [
+            "MORPHO 2026-02 (+82%)"
+          ],
           "avg_move_pct": 89,
           "avg_lead_time_days": 8.4
         },
@@ -3007,7 +3013,9 @@
           "match_ratio": "1/4",
           "historical_win_rate": 0.5555555555555556,
           "waiting_for": "Waiting for: volume_anomaly, tokenomics_event, dex_volume_surge",
-          "source_cases": [],
+          "source_cases": [
+            "MORPHO 2026-02 (+82%)"
+          ],
           "avg_move_pct": 89,
           "avg_lead_time_days": 8.4
         },
@@ -3017,7 +3025,9 @@
           "match_ratio": "1/4",
           "historical_win_rate": 0.5555555555555556,
           "waiting_for": "Waiting for: volume_anomaly, tokenomics_event, dex_volume_surge",
-          "source_cases": [],
+          "source_cases": [
+            "MORPHO 2026-02 (+82%)"
+          ],
           "avg_move_pct": 89,
           "avg_lead_time_days": 8.4
         }
@@ -6997,7 +7007,9 @@
           "match_ratio": "1/4",
           "historical_win_rate": 0.20454545454545456,
           "waiting_for": "Waiting for: kol_first_mention, tokenomics_event, sentiment_shift",
-          "source_cases": [],
+          "source_cases": [
+            "VIRTUAL 2024-10 (+972%)"
+          ],
           "avg_move_pct": 99,
           "avg_lead_time_days": 8.4
         }
@@ -9880,7 +9892,9 @@
           "match_ratio": "1/3",
           "historical_win_rate": 0.20454545454545456,
           "waiting_for": "Waiting for: catalyst_event, sentiment_shift",
-          "source_cases": [],
+          "source_cases": [
+            "EDGE 2026-02 (+217%)"
+          ],
           "avg_move_pct": 99,
           "avg_lead_time_days": 8.4
         }
