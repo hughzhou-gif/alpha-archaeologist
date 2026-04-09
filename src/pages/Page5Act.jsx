@@ -198,27 +198,35 @@ export default function Page5Act({ research }) {
   const liveAct = research?.actData
 
   // Convert live act cards to the component's expected shape
-  const actionCards = liveAct?.cards?.length ? liveAct.cards.map(c => ({
-    token: c.token,
-    matchProgress: {
-      confirmed: c.matched_conditions?.length ?? Math.round(c.match_ratio * 4),
-      total: 4,
-    },
-    signals: (c.waiting_for || []).map(w => ({
-      name: w, status: 'waiting', detail: 'waiting...',
-    })).concat(
-      (c.source_cases || []).slice(0, 3).map(s => ({
-        name: s, status: 'confirmed', detail: s,
-      }))
-    ),
-    winRate: (c.historical_win_rate ?? 0.625) * 100,
-    avgMove: '+' + Math.round((c.historical_win_rate ?? 0.6) * 200) + '%',
-    avgLead: '4.2 days',
-    sourceCases: c.source_cases || [],
-    alertDate: null,
-    moveDate: null,
-    proofText: null,
-  })) : mockActionCards
+  const actionCards = liveAct?.cards?.length ? liveAct.cards.map(c => {
+    // Parse match_ratio — could be "2/6" string or number
+    const ratioStr = String(c.match_ratio || '0/4')
+    const ratioParts = ratioStr.includes('/') ? ratioStr.split('/').map(Number) : [Math.round(c.match_ratio * 4), 4]
+    const confirmed = ratioParts[0] || 0
+    const total = ratioParts[1] || 4
+
+    // waiting_for could be string or array
+    const waitingFor = Array.isArray(c.waiting_for)
+      ? c.waiting_for
+      : typeof c.waiting_for === 'string'
+        ? c.waiting_for.replace(/^Waiting for:\s*/i, '').split(',').map(s => s.trim()).filter(Boolean)
+        : []
+
+    return {
+      token: c.token,
+      matchProgress: { confirmed, total },
+      signals: waitingFor.map(w => ({
+        name: w, status: 'waiting', detail: 'waiting...',
+      })),
+      winRate: Math.round((c.historical_win_rate ?? 0.625) * 1000) / 10,
+      avgMove: '+' + Math.round((c.historical_win_rate ?? 0.6) * 200) + '%',
+      avgLead: '4.2 days',
+      sourceCases: c.source_cases || [],
+      alertDate: null,
+      moveDate: null,
+      proofText: null,
+    }
+  }) : mockActionCards
 
   const [expandedIndex, setExpandedIndex] = useState(null)
   const [visibleCards, setVisibleCards] = useState(0)
@@ -252,11 +260,11 @@ export default function Page5Act({ research }) {
             {actionCards.length} tokens matching
           </span>
           <span style={{ fontSize: '14px', color: 'var(--text-secondary)', fontFamily: 'var(--font-mono)' }}>
-            Pattern #P-2025-031
+            {liveAct?.cards?.[0]?.pattern_name ? '' : 'Pattern #P-2025-031'}
           </span>
         </div>
         <div className="mt-1" style={{ fontSize: '13px', color: 'var(--text-tertiary)', fontFamily: 'var(--font-body)' }}>
-          &quot;Silent Accumulation + Catalyst&quot; — win rate: 62.5%, avg lead: 4.2 days
+          &quot;{liveAct?.cards?.[0]?.pattern_name || 'Silent Accumulation + Catalyst'}&quot; — win rate: {actionCards[0]?.winRate?.toFixed(1) ?? '62.5'}%, avg lead: 4.2 days
         </div>
       </motion.div>
 

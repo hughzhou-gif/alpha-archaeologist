@@ -54,11 +54,24 @@ export default function useAlphaResearch() {
         setTimeout(() => {
           if (cached.validate) {
             setValidateData(cached.validate)
+          }
+        }, 600)
+        setTimeout(() => {
+          if (cached.scan) {
+            setScanData(cached.scan)
             setCurrentPhase('scan')
+          }
+        }, 900)
+        setTimeout(() => {
+          if (cached.act) {
+            setActData(cached.act)
+          }
+          if (cached.scan) {
+            setScanData(cached.scan)
           }
           setStatus('completed')
           setCurrentPhase('done')
-        }, 600)
+        }, 1200)
       }
     }, 80)
 
