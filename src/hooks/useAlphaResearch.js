@@ -16,17 +16,22 @@ export default function useAlphaResearch() {
   const eventSourceRef = useRef(null)
 
   const start = useCallback(async (query) => {
-    // Parse query into API params — simple heuristic
-    const tokenMatch = query.match(/\b([A-Z]{2,10})\b/)
-    const token = tokenMatch ? tokenMatch[1] : query.split(' ')[0]
-    const dateMatch = query.match(/((?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\w*\s+\d{4})/i)
-    const pctMatch = query.match(/[+-]?(\d+)%/)
+    // Extract token: uppercase ticker, or first capitalized/all-caps word, or first word
+    const tokenMatch = query.match(/\b([A-Z]{2,10})\b/) || query.match(/\b([A-Za-z]{2,10})\b/)
+    const token = tokenMatch ? tokenMatch[1].toUpperCase() : query.trim().split(/\s+/)[0].toUpperCase()
 
-    // Rough date range from the query
-    let from_date = '2025-02-01'
-    let to_date = '2025-03-15'
+    // Extract date: "March 2025", "Oct 2024", "2026-02", etc.
+    const dateMatch = query.match(/((?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\w*\s+\d{4})/i)
+      || query.match(/(\d{4}[-/]\d{1,2})/)
+
+    // Default: 3 months ago to now
+    const now = new Date()
+    let from_date = new Date(now.getFullYear(), now.getMonth() - 3, 1).toISOString().slice(0, 10)
+    let to_date = now.toISOString().slice(0, 10)
+
     if (dateMatch) {
-      const d = new Date(dateMatch[1])
+      const raw = dateMatch[1].replace('/', '-')
+      const d = new Date(raw)
       if (!isNaN(d)) {
         const y = d.getFullYear()
         const m = d.getMonth()
