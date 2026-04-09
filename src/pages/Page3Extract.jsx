@@ -108,37 +108,16 @@ function DottedLine({ isVisible, delay }) {
 }
 
 function ReasoningPanel({ reasoning }) {
-  const [expanded, setExpanded] = useState(false)
-
   return (
     <div className="mt-8" style={{ width: 720 }}>
-      <button
-        onClick={() => setExpanded(!expanded)}
-        className="cursor-pointer transition-colors duration-200 flex items-center gap-1"
-        style={{ color: 'var(--text-secondary)', fontFamily: 'var(--font-body)', background: 'none', border: 'none', padding: '4px 0', fontSize: '14px' }}
-        onMouseEnter={e => { e.currentTarget.style.color = 'var(--text-primary)'; e.currentTarget.style.textDecoration = 'underline' }}
-        onMouseLeave={e => { e.currentTarget.style.color = 'var(--text-secondary)'; e.currentTarget.style.textDecoration = 'none' }}
-      >
+      <div style={{ color: 'var(--text-primary)', fontFamily: 'var(--font-body)', fontSize: '15px', fontWeight: 600, marginBottom: 12 }}>
         Why this pattern?
-        <ChevronDown size={14} strokeWidth={1.5} style={{ transition: 'transform 0.2s', transform: expanded ? 'rotate(180deg)' : 'rotate(0deg)' }} />
-      </button>
-      <AnimatePresence>
-        {expanded && (
-          <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: 'auto', opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.3 }}
-            className="overflow-hidden"
-          >
-            <div className="mt-3 p-5 rounded-[12px]" style={{ background: 'var(--bg-2)', border: '0.5px solid var(--border-default)' }}>
-              <p style={{ fontSize: '14px', lineHeight: 1.7, color: 'var(--text-secondary)', fontFamily: 'var(--font-body)' }}>
-                {reasoning}
-              </p>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      </div>
+      <div className="p-5 rounded-[12px]" style={{ background: 'var(--bg-2)', border: '0.5px solid var(--border-default)' }}>
+        <p style={{ fontSize: '15px', lineHeight: 1.8, color: 'var(--text-secondary)', fontFamily: 'var(--font-body)' }}>
+          {reasoning}
+        </p>
+      </div>
     </div>
   )
 }

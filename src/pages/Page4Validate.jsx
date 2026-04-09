@@ -74,22 +74,176 @@ const CHECKLIST_ITEMS = [
   },
 ]
 
+/* ---------- Live Autoresearch Panel ---------- */
+function AutoresearchPanel({ research }) {
+  const logs = research?.logs ?? []
+  const validate = research?.validateData
+
+  // Extract validate-phase logs for display
+  const validateLogs = logs.filter(l =>
+    l.agentType === 'validate' || l.agent === 'Autoresearch' || l.agent === 'Screen' || l.agent === 'Outcome'
+  )
+
+  // Parse key phases from logs
+  const phases = useMemo(() => {
+    const result = []
+    let screeningMatches = null
+    let outcomeHits = null
+    let autoresearchSteps = []
+    let verdict = null
+
+    for (const l of validateLogs) {
+      const msg = l.message || ''
+      if (msg.includes('SQL scan:')) {
+        const m = msg.match(/(\d+) candidates/)
+        screeningMatches = m ? parseInt(m[1]) : null
+      }
+      if (msg.includes('Overall:')) {
+        const m = msg.match(/(\d+)\/(\d+)\s*=\s*(\d+)%/)
+        if (m) outcomeHits = { hits: parseInt(m[1]), total: parseInt(m[2]), rate: parseInt(m[3]) }
+      }
+      if (msg.includes('🎯 Using')) {
+        const m = msg.match(/\((\d+)% > (\d+)%\)/)
+        if (m) outcomeHits = { ...outcomeHits, boostedRate: parseInt(m[1]) }
+      }
+      if (msg.includes('Iteration')) {
+        const m = msg.match(/Iteration (\d+)\/(\d+): (.+)/)
+        if (m) autoresearchSteps.push({ iter: parseInt(m[1]), total: parseInt(m[2]), action: m[3] })
+      }
+      if (msg.includes('Score:')) {
+        const m = msg.match(/Score: ([\d.]+) \(was ([\d.]+)\).*hit=([\d.]+)%.*lift=([\d.]+)x.*n=(\d+)/)
+        if (m && autoresearchSteps.length > 0) {
+          const last = autoresearchSteps[autoresearchSteps.length - 1]
+          last.newScore = parseFloat(m[1])
+          last.oldScore = parseFloat(m[2])
+          last.hitRate = parseFloat(m[3])
+          last.lift = parseFloat(m[4])
+          last.improved = parseFloat(m[1]) > parseFloat(m[2])
+        }
+      }
+      if (msg.includes('Verdict:')) {
+        verdict = msg.includes('PASSED') ? 'passed' : 'rejected'
+      }
+    }
+
+    result.push({
+      title: 'SQL Screening',
+      detail: screeningMatches
+        ? `${screeningMatches} candidate events found across 12 months of on-chain data`
+        : 'Scanning historical events...',
+      done: screeningMatches !== null,
+    })
+
+    if (outcomeHits) {
+      const rateStr = outcomeHits.boostedRate
+        ? `${outcomeHits.boostedRate}% (multi-condition boost from ${outcomeHits.rate}%)`
+        : `${outcomeHits.rate}%`
+      result.push({
+        title: 'Outcome Verification',
+        detail: `${outcomeHits.hits}/${outcomeHits.total} events followed by >30% pump. Hit rate: ${rateStr}`,
+        done: true,
+      })
+    }
+
+    if (autoresearchSteps.length > 0) {
+      for (const step of autoresearchSteps) {
+        result.push({
+          title: `Autoresearch #${step.iter}`,
+          detail: `${step.action}${step.hitRate ? ` → hit=${step.hitRate}%, lift=${step.lift}x` : ''}`,
+          done: true,
+          isAutoresearch: true,
+          improved: step.improved,
+        })
+      }
+    }
+
+    if (verdict) {
+      result.push({
+        title: verdict === 'passed' ? 'Pattern Validated' : 'Pattern Rejected',
+        detail: validate
+          ? `Hit rate ${(validate.hit_rate * 100).toFixed(1)}%, Lift ${validate.lift.toFixed(1)}x — ${validate.passed ? 'statistically significant' : 'insufficient signal'}`
+          : '',
+        done: true,
+        isVerdict: true,
+        passed: verdict === 'passed',
+      })
+    }
+
+    return result
+  }, [validateLogs.length, validate])
+
+  return (
+    <div className="h-full flex flex-col">
+      <div style={{ marginBottom: '24px' }}>
+        <h2 style={{ fontSize: '24px', fontWeight: 700, fontFamily: 'var(--font-body)', color: 'var(--text-primary)', margin: 0, lineHeight: 1.2 }}>
+          Backtest Validation
+        </h2>
+        <p style={{ fontSize: '13px', fontFamily: 'var(--font-body)', color: 'var(--text-secondary)', margin: '8px 0 0 0', lineHeight: 1.5 }}>
+          Autonomous parameter tuning and cross-validation against 12 months of historical data.
+        </p>
+      </div>
+
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+        <AnimatePresence>
+          {phases.map((item, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, x: -12 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.35, ease: 'easeOut', delay: i * 0.05 }}
+              style={{
+                display: 'flex', alignItems: 'flex-start', gap: '12px', padding: '10px 12px', borderRadius: '12px',
+                background: item.isVerdict
+                  ? (item.passed ? 'rgba(0, 200, 83, 0.06)' : 'rgba(255, 68, 68, 0.06)')
+                  : item.improved ? 'rgba(0, 200, 83, 0.03)' : 'transparent',
+                border: item.isAutoresearch ? '0.5px solid rgba(255,255,255,0.06)' : '0.5px solid rgba(255,255,255,0.08)',
+              }}
+            >
+              <div style={{ flexShrink: 0, marginTop: '1px' }}>
+                {item.isVerdict ? (
+                  item.passed
+                    ? <CheckCircle size={18} strokeWidth={1.8} style={{ color: 'var(--semantic-positive)' }} />
+                    : <X size={18} strokeWidth={1.8} style={{ color: 'var(--semantic-negative)' }} />
+                ) : item.isAutoresearch ? (
+                  <div style={{ width: 18, height: 18, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '11px', fontFamily: 'var(--font-mono)', color: item.improved ? 'var(--semantic-positive)' : 'var(--text-tertiary)' }}>
+                    {item.improved ? '↑' : '·'}
+                  </div>
+                ) : item.done ? (
+                  <CheckCircle size={18} strokeWidth={1.8} style={{ color: 'var(--semantic-positive)' }} />
+                ) : (
+                  <Loader2 size={18} strokeWidth={1.8} style={{ color: 'var(--text-tertiary)', animation: 'spin 1.5s linear infinite' }} />
+                )}
+              </div>
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <div style={{
+                  fontSize: item.isAutoresearch ? '12px' : '14px',
+                  fontWeight: 600,
+                  fontFamily: item.isAutoresearch ? 'var(--font-mono)' : 'var(--font-body)',
+                  color: item.isVerdict
+                    ? (item.passed ? 'var(--semantic-positive)' : 'var(--semantic-negative)')
+                    : item.done ? 'var(--text-primary)' : 'var(--text-secondary)',
+                }}>
+                  {item.title}
+                </div>
+                <div style={{ fontSize: '12px', fontFamily: 'var(--font-body)', color: 'var(--text-tertiary)', marginTop: '2px', lineHeight: 1.5 }}>
+                  {item.detail}
+                </div>
+              </div>
+            </motion.div>
+          ))}
+        </AnimatePresence>
+      </div>
+    </div>
+  )
+}
+
 function ValidationChecklist({ logs, currentIndex }) {
-  // Compute which phases have fully completed based on log playback
   const completedPhases = useMemo(() => {
     const done = new Set()
     if (currentIndex < 0) return done
 
-    const visible = logs.slice(0, currentIndex + 1)
-
-    // A phase is complete when we've seen the LAST log entry for that phase
-    // Find the last index of each phase in the full log array
     const lastIndexOf = {}
     logs.forEach((l, i) => { lastIndexOf[l.phase] = i })
-
-    // Also track first index so we know when a phase has started
-    const firstIndexOf = {}
-    logs.forEach((l, i) => { if (!(l.phase in firstIndexOf)) firstIndexOf[l.phase] = i })
 
     for (const phase of ['positive', 'negative', 'result']) {
       if (currentIndex >= lastIndexOf[phase]) {
@@ -99,7 +253,6 @@ function ValidationChecklist({ logs, currentIndex }) {
     return done
   }, [logs, currentIndex])
 
-  // Determine which items are visible (phase has started in the log)
   const visibleItems = useMemo(() => {
     if (currentIndex < 0) return []
     const firstIndexOf = {}
@@ -452,7 +605,10 @@ export default function Page4Validate({ onNext, research }) {
       <div className="flex gap-0 min-h-0" style={{ height: showResults ? '55%' : '85%', transition: 'height 0.5s ease' }}>
         {/* Left panel — ~40% */}
         <div style={{ width: '40%', paddingRight: '16px', overflow: 'hidden' }}>
-          <ValidationChecklist logs={validationLogs} currentIndex={logIndex} />
+          {liveValidate
+            ? <AutoresearchPanel research={research} />
+            : <ValidationChecklist logs={validationLogs} currentIndex={logIndex} />
+          }
         </div>
 
         <div className="w-px" style={{ background: 'var(--border-default)' }} />
