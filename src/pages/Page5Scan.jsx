@@ -323,7 +323,7 @@ export default function Page5Scan({ onNext, research }) {
         </div>
       </div>
 
-      <ScanProgress current={logIndex + 1} total={activeLogs.length} done={done} />
+      {!isLive && <ScanProgress current={logIndex + 1} total={activeLogs.length} done={done} />}
 
       <AnimatePresence>
         {done && (
