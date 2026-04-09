@@ -221,13 +221,13 @@ export default function Page5Scan({ onNext, research }) {
           setLogIndex(logIdx)
           // Reveal next token at regular intervals
           if (logIdx > 0 && logIdx % logsPerToken === 0 && tokenIdx < liveTokens.length) {
-            setVisibleTokens(prev => [...prev, liveTokens[tokenIdx]])
+            const tok = liveTokens[tokenIdx]
             tokenIdx++
+            if (tok) setVisibleTokens(prev => [...prev, tok])
           }
           logIdx++
         } else {
-          // Show any remaining tokens
-          setVisibleTokens(liveTokens)
+          setVisibleTokens(liveTokens.filter(Boolean))
           clearInterval(interval)
           setDone(true)
         }
