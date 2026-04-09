@@ -501,7 +501,7 @@ function VerdictBanner({ passed, onNext }) {
           className="mt-2"
           style={{ fontSize: '14px', color: 'var(--text-primary)', fontFamily: 'var(--font-body)' }}
         >
-          This pattern appeared 8 times in 12 months. 5 times it preceded a &gt;50% pump. It performs 3.27x better than chance.
+          This pattern appeared {liveValidate ? liveValidate.total_pump_events : 8} times in 12 months. {liveValidate ? liveValidate.hit_count : 5} times it preceded a &gt;30% pump. It performs {liveValidate ? liveValidate.lift.toFixed(1) : '3.27'}x better than chance.
         </motion.div>
       </div>
       <div style={{ display: 'flex', gap: '12px', flexShrink: 0 }}>
