@@ -208,31 +208,36 @@ export default function Page5Scan({ onNext, research }) {
   const [visibleTokens, setVisibleTokens] = useState([])
   const [done, setDone] = useState(false)
 
-  // If live data arrived, replay logs and stagger token reveals
+  // If live data arrived, replay all logs first, then reveal tokens one by one
   useEffect(() => {
     if (liveScan && isLive) {
       let logIdx = 0
-      let tokenIdx = 0
-      // Calculate how often to reveal a token (spread across log replay)
-      const logsPerToken = Math.max(1, Math.floor(liveScanLogs.length / (liveTokens.length || 1)))
+      let cancelled = false
 
-      const interval = setInterval(() => {
+      // Phase 1: replay all scan logs
+      const logInterval = setInterval(() => {
+        if (cancelled) return
         if (logIdx < liveScanLogs.length) {
           setLogIndex(logIdx)
-          // Reveal next token at regular intervals
-          if (logIdx > 0 && logIdx % logsPerToken === 0 && tokenIdx < liveTokens.length) {
-            const tok = liveTokens[tokenIdx]
-            tokenIdx++
-            if (tok) setVisibleTokens(prev => [...prev, tok])
-          }
           logIdx++
         } else {
-          setVisibleTokens(liveTokens.filter(Boolean))
-          clearInterval(interval)
-          setDone(true)
+          clearInterval(logInterval)
+          // Phase 2: reveal tokens one by one after logs finish
+          let tokenIdx = 0
+          const tokenInterval = setInterval(() => {
+            if (cancelled) return
+            if (tokenIdx < liveTokens.length) {
+              const tok = liveTokens[tokenIdx]
+              tokenIdx++
+              if (tok) setVisibleTokens(prev => [...prev, tok])
+            } else {
+              clearInterval(tokenInterval)
+              setDone(true)
+            }
+          }, 300)
         }
-      }, 120)
-      return () => clearInterval(interval)
+      }, 100)
+      return () => { cancelled = true; clearInterval(logInterval) }
     } else if (liveScan) {
       setLogIndex(activeLogs.length - 1)
       setVisibleTokens(liveTokens)
