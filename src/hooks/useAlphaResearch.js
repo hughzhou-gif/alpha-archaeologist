@@ -39,8 +39,9 @@ export default function useAlphaResearch() {
     let i = 0
     const interval = setInterval(() => {
       if (i < allLogs.length) {
-        setLogs(prev => [...prev, allLogs[i]])
+        const log = allLogs[i]
         i++
+        setLogs(prev => [...prev, log])
       } else {
         clearInterval(interval)
         // After logs finish, reveal each phase with small delays

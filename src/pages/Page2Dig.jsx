@@ -13,6 +13,22 @@ const SIGNAL_COLORS = {
   dev: 'var(--signal-dev)',
 }
 
+const AGENT_TYPE_COLORS = {
+  onchain: 'var(--signal-onchain)',
+  social: 'var(--signal-social)',
+  market: 'var(--signal-market)',
+  governance: 'var(--signal-governance)',
+  price: 'var(--text-primary)',
+  extract: 'var(--accent-primary)',
+  validate: 'var(--semantic-positive)',
+  scan: 'var(--accent-primary)',
+  system: 'var(--text-primary)',
+}
+
+function getLogColor(log) {
+  return log.agentColor || AGENT_TYPE_COLORS[log.agentType] || 'var(--text-primary)'
+}
+
 function ResearchLog({ logs, currentIndex }) {
   const containerRef = useRef(null)
 
@@ -29,24 +45,27 @@ function ResearchLog({ logs, currentIndex }) {
       </div>
       <div ref={containerRef} className="flex-1 overflow-y-auto pr-2" style={{ fontFamily: 'var(--font-mono)', fontSize: '14px' }}>
         <AnimatePresence>
-          {logs.slice(0, currentIndex + 1).map((log, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.2 }}
-              className="flex gap-3 py-1.5 px-2 rounded"
-              style={{
-                borderLeft: log.isHighlight ? `3px solid ${log.agentColor}` : '3px solid transparent',
-                background: log.isHighlight ? 'rgba(255,255,255,0.04)' : 'transparent',
-              }}
-            >
-              <span style={{ color: 'var(--text-tertiary)', fontSize: '12px', flexShrink: 0 }}>{log.time}</span>
-              <AgentIcon name={log.icon} color={log.agentColor} />
-              <span style={{ color: log.agentColor, flexShrink: 0, fontWeight: 600, fontSize: '12px' }}>{log.agent}</span>
-              <span style={{ color: 'var(--text-secondary)' }}>{log.message}</span>
-            </motion.div>
-          ))}
+          {logs.slice(0, currentIndex + 1).map((log, i) => {
+            const color = getLogColor(log)
+            return (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.2 }}
+                className="flex gap-3 py-1.5 px-2 rounded"
+                style={{
+                  borderLeft: log.isHighlight ? `3px solid ${color}` : '3px solid transparent',
+                  background: log.isHighlight ? 'rgba(255,255,255,0.04)' : 'transparent',
+                }}
+              >
+                <span style={{ color: 'var(--text-tertiary)', fontSize: '12px', flexShrink: 0 }}>{log.time}</span>
+                <AgentIcon name={log.icon} color={color} />
+                <span style={{ color, flexShrink: 0, fontWeight: 600, fontSize: '12px' }}>{log.agent}</span>
+                <span style={{ color: 'var(--text-secondary)' }}>{log.message}</span>
+              </motion.div>
+            )
+          })}
         </AnimatePresence>
       </div>
     </div>
@@ -147,7 +166,7 @@ export default function Page2Dig({ onNext, research }) {
   const displaySignals = isLive ? liveSignals : visibleSignals
   const displayDone = isLive ? liveDone : done
 
-  const agentsDone = new Set(displayLogs.slice(0, displayLogIndex + 1).filter(l => l.message?.includes('complete') || l.message?.includes('Research complete')).map(l => l.agent)).size
+  const agentsDone = new Set(displayLogs.slice(0, displayLogIndex + 1).filter(l => l?.message?.includes('complete') || l?.message?.includes('Research complete')).map(l => l.agent)).size
 
   const startPrice = mockPriceData[0]?.price ?? 0
   const endPrice = mockPriceData[mockPriceData.length - 1]?.price ?? 0
