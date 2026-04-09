@@ -30,15 +30,18 @@ Generates actionable alerts ranked by match quality. Each card shows confirmed v
 - **Data Sources**: On-chain SQL (Ethereum, Base, Arbitrum), social sentiment APIs, market structure feeds, news aggregation
 - **Validation**: Parameterized backtesting with autonomous threshold optimization (autoresearch)
 
-## Key Results
+## Evaluation & Backtesting
 
-| Token | Pump | Signals Found | Pattern | Hit Rate | Lift |
-|-------|------|--------------|---------|----------|------|
-| MORPHO | +81% | 30 | Volume Anomaly + Whale Accumulation + Tokenomics Event | 55.6% | 11.1x |
-| VIRTUAL | +830% | 68 | Volume Surge + KOL Discovery + Tokenomics Event | 20.5% | 4.1x |
-| EDGE | +217% | 15 | Catalyst + Volume Surge + Sentiment Shift | 20.5% | 4.1x |
+Every pattern produced by Alpha Archaeologist is rigorously validated before deployment. The system includes a full evaluation harness (`eval_harness.py`) that runs systematic backtests across large token sets:
 
-All patterns validated with >4x lift vs. random baseline across 12 months of historical data.
+- **13-case test suite** covering tokens across DeFi, L2, AI, and memecoin sectors (MORPHO, VIRTUAL, EDGE, HYPE, AERO, KAITO, AIXBT, etc.)
+- **Multi-round evaluation**: each case runs the full Dig → Extract → Validate pipeline, with results compared across runs for consistency
+- **SQL-driven screening** against 12 months of on-chain data across Ethereum, Base, and Arbitrum — no synthetic or simulated data
+- **Autoresearch**: autonomous parameter tuning (up to 10 iterations per pattern) that mutates threshold values, tests against real outcomes, and keeps only statistically significant improvements
+- **Outcome verification**: every pattern match is checked against actual price data — did the token pump >30% within 14 days? No forward-looking bias.
+- **Confidence tiers**: matches are scored by multi-condition alignment (2+ SQL conditions), social confirmation, and single-condition signals, with results reported separately per tier
+
+The validation pipeline produces a full audit trail: SQL queries executed, candidates screened, outcome results per token, autoresearch mutations tried, and final pass/fail metrics (hit rate, false positive rate, lift, sample size).
 
 ## Quick Start
 
